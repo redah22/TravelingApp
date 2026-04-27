@@ -1,0 +1,78 @@
+[
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_photo_detail.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_photo_detail.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_groups.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_groups.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/item_photo_post.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/item_photo_post.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_auth.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_auth.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/item_trip_step.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/item_trip_step.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_profile.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_profile.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/fragment_travel_path_criteria.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/fragment_travel_path_criteria.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_register.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_register.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-42:/layout/activity_feed.xml",
+        "source": "com.traveling.app-main-45:/layout/activity_feed.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_feed.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_feed.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_main.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/fragment_login.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/fragment_login.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_publish.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_publish.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/fragment_travel_path_result.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/fragment_travel_path_result.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_map_feed.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_map_feed.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/item_comment.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/item_comment.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/fragment_home.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_home.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_home.xml"
+    },
+    {
+        "merged": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-mergeDebugResources-42:/layout/activity_login.xml",
+        "source": "/Users/redah/.gradle/daemon/8.9/com.traveling.app-main-45:/layout/activity_login.xml"
+    }
+]

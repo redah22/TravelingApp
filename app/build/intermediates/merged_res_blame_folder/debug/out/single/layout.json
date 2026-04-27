@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_groups.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_groups.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_login.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_auth.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_auth.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_home.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_home.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_map_feed.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_map_feed.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_register.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_register.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_profile.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_profile.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/item_photo_post.xml",
+        "source": "com.traveling.app-main-43:/layout/item_photo_post.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_photo_detail.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_photo_detail.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_publish.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_publish.xml"
+    },
+    {
+        "merged": "com.traveling.app-mergeDebugResources-40:/layout/activity_feed.xml",
+        "source": "com.traveling.app-main-43:/layout/activity_feed.xml"
+    }
+]

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Planifier mon voyage"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Destination -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Destination *"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/etDestination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:completionThreshold="3"
+                android:padding="16dp"
+                android:background="@android:color/transparent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Preview Map (Optionnel mais recommandé pour "voir" l'endroit) -->
+        <org.osmdroid.views.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone" /> <!-- Caché au début -->
+
+        <!-- Activités souhaitées -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activités souhaitées *"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cgActivities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:chipSpacingHorizontal="8dp"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRestauration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restauration"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                app:chipIcon="@drawable/ic_launcher_foreground"/> <!-- Placeholder icon -->
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLoisirs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loisirs"
+                style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDecouverte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Découverte"
+                style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCulture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Culture"
+                style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipNature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nature"
+                style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipShopping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shopping"
+                style="@style/Widget.MaterialComponents.Chip.Choice"/>
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Lieux à visiter impérativement -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lieux à visiter impérativement"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMandatoryPlaces"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Budget maximum -->
+        <TextView
+            android:id="@+id/tvBudgetText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Budget maximum: 1500 €"
+            android:layout_marginBottom="4dp"/>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderBudget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="100"
+            android:valueTo="5000"
+            android:stepSize="100"
+            android:value="1500"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Durée -->
+        <TextView
+            android:id="@+id/tvDurationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Durée: 1 jour"
+            android:layout_marginBottom="4dp"/>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="1"
+            android:valueTo="14"
+            android:stepSize="1"
+            android:value="1"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Niveau d'effort -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Niveau d'effort accepté"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/tgEffort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnEffortFaible"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Faible"/>
+            <Button
+                android:id="@+id/btnEffortModere"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Modéré"/>
+            <Button
+                android:id="@+id/btnEffortEleve"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Elevé"/>
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <!-- Sensibilité météo -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sensibilité météo (optionnel)"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/tgWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            android:layout_marginBottom="24dp">
+
+            <Button
+                android:id="@+id/btnWeatherFroid"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Froid"/>
+            <Button
+                android:id="@+id/btnWeatherChaleur"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Chaleur"/>
+            <Button
+                android:id="@+id/btnWeatherHumidite"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Humidité"/>
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <Button
+            android:id="@+id/btnGenerate"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Générer mes parcours"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:backgroundTint="#D81B60"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Traveling</string>
+    <string name="preferences_title">Vos Préférences de Visite</string>
+    <string name="preferences_activities_label">Quelles activités vous intéressent ?</string>
+    <string name="activity_restaurant">Restauration</string>
+    <string name="activity_culture">Culture &amp; Musées</string>
+    <string name="activity_loisirs">Loisirs &amp; Détente</string>
+    <string name="activity_nature">Découverte Nature</string>
+    
+    <string name="preferences_budget_label">Budget Maximum (€)</string>
+    <string name="preferences_duration_label">Durée disponible (Heures)</string>
+    
+    <string name="preferences_effort_label">Niveau d\'effort souhaité</string>
+    <string name="effort_faible">Faible (Adapté séniors/enfants)</string>
+    <string name="effort_normal">Normal (Marche standard)</string>
+    <string name="effort_intense">Intense (Rythme soutenu)</string>
+    
+    <string name="preferences_weather_label">Tolérances Météo</string>
+    <string name="weather_cold">Je tolère le Froid</string>
+    <string name="weather_heat">Je tolère la Chaleur</string>
+    <string name="weather_rain">Je tolère la Pluie</string>
+
+    <string name="generate_path_button">Générer mes parcours</string>
+    <string name="themes_default_color_primary">#FF6200EE</string>
+</resources>

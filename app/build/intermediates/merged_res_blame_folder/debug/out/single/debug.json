@@ -1,0 +1,58 @@
+[
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_publish.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_publish.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_profile.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_profile.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_groups.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_groups.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_photo_detail.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_photo_detail.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_home.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_home.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.traveling.app-main-43:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_map_feed.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_map_feed.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.traveling.app-main-43:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_auth.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_auth.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_register.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_register.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_feed.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_feed.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.traveling.app-main-43:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_item_photo_post.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/item_photo_post.xml"
+    },
+    {
+        "merged": "com.traveling.app-merged_res-41:/layout_activity_login.xml.flat",
+        "source": "com.traveling.app-main-43:/layout/activity_login.xml"
+    }
+]

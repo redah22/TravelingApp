@@ -1,0 +1,150 @@
+# Analyse & Plan de Correction — TravelPath
+
+## Contexte
+
+L'application TravelPath est la **Partie 2** du projet Traveling (Master 1 — Programmation Mobile). Le `rendu_final_traveling.pdf` présente les maquettes et l'analyse fonctionnelle. Le sujet détaille les fonctionnalités attendues.
+
+---
+
+## Diagnostic : État actuel vs Exigences
+
+### ✅ Ce qui est déjà implémenté (partiellement ou totalement)
+
+| Fonctionnalité | État |
+|---|---|
+| Écran de connexion (Login) | ✅ Layout existe, bouton navigue vers Home — **mais aucune vraie logique d'auth** |
+| Passerelle (Home) avec 2 cartes (TravelShare/TravelPath) | ✅ Fonctionne |
+| Formulaire de critères | ✅ Destination (autocomplete Photon API), activités (chips), budget (slider), durée (slider), effort, météo |
+| Carte OSMDroid sur le formulaire | ✅ Apparaît après sélection |
+| Résultats d'itinéraire avec Overpass API | ✅ Recherche de lieux réels |
+| 3 formules (Economique/Equilibré/Confort) via TabLayout | ✅ Fonctionne |
+| Carte OSMDroid sur les résultats | ✅ Marqueurs placés |
+| Timeline (RecyclerView) | ✅ Fonctionne |
+| Like/Dislike | ✅ ToggleButtons |
+| Export PDF | ✅ Basique (texte brut) |
+| Métriques (coût, durée, effort) | ✅ Affichées |
+| Bouton Réajuster | ✅ Retour au formulaire |
+
+### ❌ Problèmes critiques qui empêchent le bon fonctionnement
+
+| Problème | Détail |
+|---|---|
+| **`compileSdk` syntax invalide** | `compileSdk { version = release(36) }` → **ne compile PAS** avec AGP 9.0.1. Doit être `compileSdk = 36` |
+| **Import déprécié** | `android.preference.PreferenceManager` → devrait être `androidx.preference.PreferenceManager` (ou utiliser directement `getContext().getPackageName()`) |
+| **Pas de navigation Android (Navigation Component)** | Toutes les transitions sont faites avec `FragmentManager.replace()` manuellement. Fonctionne mais fragile |
+| **Pas de sauvegarde/persistance** | Aucune base de données Room, aucun SharedPreferences pour sauvegarder les parcours |
+| **Pas de mode hors-ligne** | Aucun cache des données |
+
+### ❌ Fonctionnalités manquantes par rapport au sujet
+
+| Fonctionnalité requise | Statut |
+|---|---|
+| **Inscription / vraie authentification** | ❌ Manquant — le bouton "Se connecter" navigue directement sans vérification |
+| **Sauvegarde d'itinéraires** | ❌ Manquant (sujet : "sauvegarde et partage") |
+| **Partage d'itinéraires** | ❌ Manquant (Intent share) |
+| **Mode hors-ligne léger** | ❌ Manquant (pas de cache Room/SQLite) |
+| **Prise en compte météo du jour** | ❌ Manquant — les boutons météo existent mais ne modifient PAS l'itinéraire, aucune API météo n'est appelée |
+| **Créneaux d'ouverture** (horaires réels) | ❌ Manquant |
+| **Regénération avec ajustements** | ⚠️ Le bouton "Réajuster" retourne juste au formulaire, pas de vraie regénération in-place |
+| **Photos/vidéos par étape** | ❌ Manquant — seule une couleur de fond est affichée dans `ivStepImage` |
+| **Transport réaliste (distance/temps)** | ⚠️ Transport info est hardcodé "🚶 ~15 min" pour toutes les étapes |
+| **Budget/durée passés au résultat** | ❌ Le budget et la durée saisis ne sont PAS transmis au fragment résultat via les arguments |
+| **Activité "Découverte"/"Shopping" dans Overpass** | ❌ Les chips Découverte et Shopping ne génèrent aucun tag Overpass |
+
+---
+
+## Plan de corrections
+
+### Phase 1 — Corrections critiques (l'app ne compile/tourne pas)
+
+#### [MODIFY] [build.gradle.kts](file:///Users/talajibbaoui/AndroidStudioProjects/TravelPath/app/build.gradle.kts)
+- Corriger `compileSdk { version = release(36) }` → `compileSdk = 36`
+- Ajouter la dépendance `androidx.preference` si nécessaire
+
+#### [MODIFY] [TravelPathResultFragment.java](file:///Users/talajibbaoui/AndroidStudioProjects/TravelPath/app/src/main/java/com/example/travelpath/fragments/TravelPathResultFragment.java)
+- Remplacer `android.preference.PreferenceManager` par une config OSMDroid simplifiée (utiliser `getContext().getPackageName()` comme dans le CriteriaFragment)
+
+---
+
+### Phase 2 — Fonctionnalités manquantes essentielles
+
+#### 2.1 Authentification basique
+- **LoginFragment** : Ajouter validation email/mot de passe + bouton inscription
+- **Stockage** : SharedPreferences pour stocker les credentials (simple, pas de serveur backend requis par le sujet)
+
+#### 2.2 Transmettre TOUS les critères au résultat
+- Passer `budget`, `duration`, `effort`, `weather`, `mandatoryPlaces` dans le Bundle
+
+#### 2.3 Mapping Overpass pour Découverte et Shopping
+- Ajouter les tags Overpass pour "Découverte" (`tourism=attraction` + `historic=*`) et "Shopping" (`shop=*`)
+
+#### 2.4 Appel API météo
+- Utiliser Open-Meteo API (gratuit, pas de clé) pour récupérer la météo du jour de la destination
+- Afficher la météo dans les résultats
+- Adapter les suggestions en fonction de la sensibilité météo
+
+#### 2.5 Photos réelles par étape
+- Utiliser les APIs Wikimedia Commons / vignettes OSM pour afficher une vraie image quand disponible
+
+#### 2.6 Calcul transport réaliste
+- Calculer la distance entre les étapes (formule Haversine) et estimer le temps de marche
+
+#### 2.7 Sauvegarde des itinéraires
+- Utiliser SharedPreferences + JSON pour sauvegarder les parcours aimés
+
+#### 2.8 Partage d'itinéraire
+- Ajouter un bouton partage (Intent.ACTION_SEND avec le texte du parcours)
+
+#### 2.9 Améliorer l'export PDF
+- Ajouter le nom de destination, les métriques, et un meilleur formatage
+
+---
+
+### Phase 3 — Améliorations UI conformes aux maquettes
+
+#### 3.1 Écran de connexion
+- Plus proche de la maquette Figure 2 (logo, champs stylisés)
+- Ajouter un lien "S'inscrire" et un mode anonyme "Continuer sans compte"
+
+#### 3.2 Passerelle (Home)
+- Ajouter des icônes et descriptions plus riches comme dans Figure 3
+- Emoji/icônes pour chaque carte
+
+#### 3.3 Critères TravelPath
+- Conforme à Figure 5 (formulaire avec tous les champs)
+
+#### 3.4 Résultats
+- Conforme aux Figures 6 et 7 (carte interactive, timeline, choix formules, export PDF)
+
+---
+
+## Vérification
+
+### Build & Run
+```bash
+./gradlew assembleDebug
+```
+
+### Tests fonctionnels
+1. Login → Home → TravelPath
+2. Saisir une destination (autocomplete fonctionne)
+3. Sélectionner des activités, configurer budget/durée
+4. Générer → vérifier les 3 formules
+5. Vérifier la carte avec marqueurs
+6. Like/Dislike
+7. Export PDF
+8. Partage
+9. Sauvegarde
+
+---
+
+## Questions ouvertes
+
+> [!IMPORTANT]
+> **Q1** : Souhaites-tu que j'implémente **toutes** les corrections ci-dessus, ou uniquement les corrections critiques (Phase 1) pour que l'app compile et tourne ?
+
+> [!IMPORTANT] 
+> **Q2** : Le sujet mentionne "mode hors-ligne léger" — veux-tu que j'ajoute un cache SQLite/Room, ou un simple cache SharedPreferences en JSON suffit ?
+
+> [!WARNING]
+> **Q3** : L'authentification — le sujet ne mentionne PAS de backend serveur. Je propose une auth locale (SharedPreferences). Est-ce suffisant ou y a-t-il un backend Firebase/autre prévu ?

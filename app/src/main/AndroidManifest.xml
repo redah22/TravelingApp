@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.traveling.app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Traveling">
+
+        <activity
+            android:name=".travelpath.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TravelPath">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".travelshare.ui.HomeActivity" />
+
+        <activity android:name=".travelshare.ui.LoginActivity" />
+        <activity android:name=".travelshare.ui.RegisterActivity" />
+        <activity android:name=".travelshare.ui.FeedActivity" />
+        <activity android:name=".travelshare.ui.MapFeedActivity" />
+        <activity android:name=".travelshare.ui.PhotoDetailActivity" />
+        <activity android:name=".travelshare.ui.PublishActivity" />
+        <activity android:name=".travelshare.ui.ProfileActivity" />
+        <activity android:name=".travelshare.ui.GroupsActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+    </application>
+
+</manifest>

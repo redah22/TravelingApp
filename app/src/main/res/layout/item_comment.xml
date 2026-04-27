@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="8dp">
+
+    <TextView
+        android:id="@+id/tvCommentUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Utilisateur"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="#6C63FF" />
+
+    <TextView
+        android:id="@+id/tvCommentText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ceci est un commentaire de test."
+        android:textSize="14sp"
+        android:textColor="#333333"
+        android:layout_marginTop="2dp" />
+
+</LinearLayout>

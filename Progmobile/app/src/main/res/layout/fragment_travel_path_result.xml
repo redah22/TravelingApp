@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8F9FA">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#D81B60"
+        app:title="Résultats de l'Itinéraire"
+        app:titleTextColor="@android:color/white"/>
+
+    <!-- Weather banner -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center"
+        android:background="#FFF3E0">
+
+        <TextView
+            android:id="@+id/tvWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌤️ Chargement météo..."
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="#E65100"/>
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabSelectedTextColor="#D81B60"
+        app:tabIndicatorColor="#D81B60"
+        android:background="@android:color/white">
+        <com.google.android.material.tabs.TabItem android:text="💰 Economique"/>
+        <com.google.android.material.tabs.TabItem android:text="⚖️ Equilibré"/>
+        <com.google.android.material.tabs.TabItem android:text="✨ Confort"/>
+    </com.google.android.material.tabs.TabLayout>
+
+    <!-- Summary Metrics -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="#E8EAF6">
+
+        <TextView
+            android:id="@+id/tvTotalBudget"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="💰 0 €"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvTotalTime"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="⏱️ 0 h"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvEffort"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="💪 Modéré"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- Like/Dislike bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="4dp"
+        android:gravity="end"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Avis sur ce parcours:"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="13sp"/>
+
+        <ToggleButton
+            android:id="@+id/btnLike"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textOn="👍"
+            android:textOff="👍"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <ToggleButton
+            android:id="@+id/btnDislike"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textOn="👎"
+            android:textOff="👎"
+            android:background="?android:attr/selectableItemBackground" />
+    </LinearLayout>
+
+    <!-- OSMDroid Map -->
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="220dp" />
+
+    <!-- Timeline -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTimeline"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp"/>
+
+    <!-- Bottom action bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="@android:color/white"
+        android:elevation="8dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnExportPdf"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="📄 PDF"
+            android:textAllCaps="false"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:cornerRadius="8dp"
+            android:layout_marginEnd="4dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnShare"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="📤 Partager"
+            android:textAllCaps="false"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:cornerRadius="8dp"
+            android:layout_marginHorizontal="4dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegenerate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="🔄 Réajuster"
+            android:textAllCaps="false"
+            app:cornerRadius="8dp"
+            android:backgroundTint="#D81B60"
+            android:layout_marginStart="4dp"/>
+    </LinearLayout>
+
+</LinearLayout>

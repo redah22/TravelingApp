@@ -1,0 +1,92 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+% Marges
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm
+}
+
+% Couleurs
+\definecolor{primary}{HTML}{7C4DFF}
+\definecolor{secondary}{HTML}{333333}
+
+% Personnalisation des titres
+\titleformat{\section}{\color{primary}\normalfont\Large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\color{secondary}\normalfont\large\bfseries}{\thesubsection.}{1em}{}
+
+% Méta-données
+\title{\textbf{\textcolor{primary}{Rapport de Projet : TravelingApp}} \\ \large Bilan final de la fusion et des développements}
+\author{Reda \& Binôme}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\vspace{1cm}
+
+\section{Présentation du Dépôt et Lien}
+Ce dépôt regroupe l'application finale issue de la fusion complète des deux modules principaux développés au cours du semestre :
+\begin{itemize}
+    \item \textbf{TravelPath (Java) :} Module de planification intelligente de trajets interactifs.
+    \item \textbf{TravelShare (Kotlin) :} Module de réseau social dédié au partage d'expériences de voyages.
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent \textbf{Lien du dépôt Git :} \url{https://github.com/redah22/TravelingApp}
+\vspace{1cm}
+
+\section{Parties Développées (Acquises et Fonctionnelles)}
+
+\subsection{Module Social (TravelShare - Partie 1)}
+\begin{itemize}[label=\textcolor{primary}{\textbullet}]
+    \item \textbf{Persistance via Base de Données SQLite :} Intégration locale robuste (\texttt{DatabaseHelper.kt}) sauvegardant l'intégralité des publications, les images (URI physiques locales Android), les commentaires, et l'inscription sécurisée des utilisateurs.
+    \item \textbf{Flux d'actualité :} Création dynamique d'objets \texttt{PhotoPost} interfacés avec des éléments de cartes (Lieu, Auteur, Description).
+    \item \textbf{Interactions communautaires :} Appui sur la logique Many-To-Many en SQLite pour autoriser les favoris (Likes dynamiques), ainsi que la publication et consultation dynamique de commentaires avec affichage des compteurs correspondants.
+    \item \textbf{Authentification fluide :} Flux UI harmonisé couvrant le \textit{Register}, le \textit{Login} et un accès en mode \textit{Anonyme}.
+\end{itemize}
+
+\subsection{Module Planification (TravelPath - Partie 2)}
+\begin{itemize}[label=\textcolor{primary}{\textbullet}]
+    \item \textbf{Moteur de recherche temps-réel :} Saisie avec autocomplétion asynchrone pointant vers l'API \url{photon.komoot.io} (OpenStreetMap) pour le géocodage des destinations.
+    \item \textbf{Générateur d'Aventures asynchrone :} Algorithme multi-paramètres filtrant sur le \textit{budget}, \textit{la durée}, et la \textit{densité d'effort}. L'exploration directe de l'API Overpass génère des Points d'Intérêt (POI) qualitatifs autour de la zone et du secteur d'activité visés.
+    \item \textbf{Carte Dynamique et Tuiles OSMDroid :} Rendu visuel d'OpenStreetMap (Mapnik) affichant un tracé (\textit{Polyline}) du parcours suggéré, superposé par des bulles (marqueurs configurés et numérotés) détaillant les distances.
+    \item \textbf{Métriques additionnelles :} Connexion dynamique à l'API \textit{Open-Meteo} pour l'affichage précis des prévisions actuelles de la coordonnée GPS cible. Algorithme de \textit{Haversine} permettant de formuler le temps réel de marche entre deux monuments consécutifs.
+    \item \textbf{Export document :} Architecture de génération de documents PDF natifs reprenant le planning de la journée heure par heure.
+\end{itemize}
+
+\subsection{Logique de Fusion et d'Architecture globale}
+\begin{itemize}[label=\textcolor{primary}{\textbullet}]
+    \item \textbf{Synchronisation de Sessions asymétriques :} Couplage de la base de données \textit{SQLite} à base de requêtes brutes de TravelShare avec la gestion \textit{SharedPreferences} rapide de TravelPath, assurant à l'utilisateur de n'avoir à créer son compte (\texttt{RegisterActivity}) ou se connecter qu'une seule et unique fois quel que soit l'écran sur lequel l'app démarre.
+    \item \textbf{Intégrations Backstack :} Modification du cycle de vie des activités (Kotlin) et des fragments (Java) pour conserver une cohérence de la mémoire. Nettoyage absolu lors du bouton de retour au point central \texttt{MainActivity}.
+    \item \textbf{UX/UI harmonisée :} Tous les Layouts Kotlin (Sombre) ont basculé sur un thème \textit{Light Mode DayNight} pour concorder chromatiquement avec l'interface originelle Violet et Blanc (\texttt{\#7C4DFF}) du binôme Java, aboutissant à une charte graphique globale propre et continue.
+\end{itemize}
+
+\newpage
+
+\section{Ce qu'il reste à faire / Pistes d'évolutions}
+
+\begin{itemize}[label=\textcolor{primary}{\textbullet}]
+    \item \textbf{Cloud Persistant et Synchronisation distante :}\\
+    Actuellement, l'intégralité du réseau social TravelShare est restreint au périmètre confiné de la machine (SQLite). Pour valider le concept "Communautaire", il faudrait implémenter une API REST ou brancher un back-end as-a-Service, tel que \textit{Firebase (Firestore \& Storage)} ou  un back-end de type \textit{PostgreSQL/Spring Boot}, afin que le flux de publications et de profils se synchronise en direct entre deux téléphones distincts.
+
+    \item \textbf{Optimisation du Routage (Temps-Réel) :}\\
+    Le dessin de l'itinéraire sur la carte d'OSMDroid utilise majoritairement un calcul vectoriel pour tracer ses droits. L'utilisation et la substitution par une API dédiée et spécialisée (ex: \textit{GraphHopper Routing API} ou \textit{Google Directions API}) rendrait les horaires, les routes empruntées et les propositions de détours à pied beaucoup plus réalistes en se fiant aux topologies exactes des routes piétonnes.
+
+    \item \textbf{Boucle Applicative (Inter-dépendance et Partage) :}\\
+    L'étape applicative ultime de la fusion consisterait à ce que l'itinéraire approuvé et sauvegardé via \textit{TravelPath} offre la possibilité de publier en 1-clic une image récapitulative et sa géolocalisation pour transparaître instantanément comme une publication valide et officielle sur l'onglet actualité de \textit{TravelShare}. 
+\end{itemize}
+
+\end{document}

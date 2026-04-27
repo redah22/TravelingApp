@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bienvenue sur TravelShare !"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Bouton Mode Connecté -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Se connecter (Mode Complet)"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OU"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Bouton Mode Anonyme -->
+    <Button
+        android:id="@+id/btnAnonymous"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Visiter en Anonyme"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+</LinearLayout>
