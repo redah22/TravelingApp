@@ -6,11 +6,22 @@ INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp
 		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:45:13-44
 	android:name
 		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:44:13-58
+provider#androidx.core.content.FileProvider
+INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:47:9-55:20
+	android:grantUriPermissions
+		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:51:13-47
+	android:authorities
+		INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml
+		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:49:13-64
+	android:exported
+		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:50:13-37
+	android:name
+		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:48:13-62
 manifest
-ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:2:1-48:12
-INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:2:1-48:12
-INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:2:1-48:12
-INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:2:1-48:12
+ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:2:1-59:12
+INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:2:1-59:12
+INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:2:1-59:12
+INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:2:1-59:12
 MERGED from [androidx.databinding:viewbinding:8.3.2] /Users/redah/.gradle/caches/8.9/transforms/f06c1dddb2c207463aa437789984a000/transformed/jetified-viewbinding-8.3.2/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.11.0] /Users/redah/.gradle/caches/8.9/transforms/0c600f400aa6a6b76d016fdca2473793/transformed/material-1.11.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/redah/.gradle/caches/8.9/transforms/3efcf297af444e4e08257daf19b77125/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
@@ -113,8 +124,8 @@ MERGED from [com.google.android.gms:play-services-maps:18.2.0] /Users/redah/.gra
 	android:name
 		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:11:22-76
 application
-ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:13:5-46:19
-INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:13:5-46:19
+ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:13:5-57:19
+INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:13:5-57:19
 MERGED from [com.google.android.material:material:1.11.0] /Users/redah/.gradle/caches/8.9/transforms/0c600f400aa6a6b76d016fdca2473793/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] /Users/redah/.gradle/caches/8.9/transforms/0c600f400aa6a6b76d016fdca2473793/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/redah/.gradle/caches/8.9/transforms/3efcf297af444e4e08257daf19b77125/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -215,6 +226,12 @@ activity#com.traveling.app.travelshare.ui.GroupsActivity
 ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:41:9-67
 	android:name
 		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:41:19-64
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:52:13-54:54
+	android:resource
+		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:54:17-51
+	android:name
+		ADDED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:53:17-67
 uses-sdk
 INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml

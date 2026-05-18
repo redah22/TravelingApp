@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.traveling.app.R;
 import java.lang.NullPointerException;
@@ -36,7 +38,7 @@ public final class ActivityFeedBinding implements ViewBinding {
   public final Button btnLoginFeed;
 
   @NonNull
-  public final TextView btnProfile;
+  public final MaterialCardView btnProfile;
 
   @NonNull
   public final ImageView btnSearch;
@@ -45,15 +47,23 @@ public final class ActivityFeedBinding implements ViewBinding {
   public final Button btnSignupBanner;
 
   @NonNull
+  public final EditText etSearch;
+
+  @NonNull
   public final FloatingActionButton fabPublish;
 
   @NonNull
   public final RecyclerView rvPhotoFeed;
 
+  @NonNull
+  public final TextView tvFeedProfileInitials;
+
   private ActivityFeedBinding(@NonNull LinearLayout rootView, @NonNull LinearLayout bannerAnonymous,
       @NonNull ImageView btnBack, @NonNull Button btnLoginBanner, @NonNull Button btnLoginFeed,
-      @NonNull TextView btnProfile, @NonNull ImageView btnSearch, @NonNull Button btnSignupBanner,
-      @NonNull FloatingActionButton fabPublish, @NonNull RecyclerView rvPhotoFeed) {
+      @NonNull MaterialCardView btnProfile, @NonNull ImageView btnSearch,
+      @NonNull Button btnSignupBanner, @NonNull EditText etSearch,
+      @NonNull FloatingActionButton fabPublish, @NonNull RecyclerView rvPhotoFeed,
+      @NonNull TextView tvFeedProfileInitials) {
     this.rootView = rootView;
     this.bannerAnonymous = bannerAnonymous;
     this.btnBack = btnBack;
@@ -62,8 +72,10 @@ public final class ActivityFeedBinding implements ViewBinding {
     this.btnProfile = btnProfile;
     this.btnSearch = btnSearch;
     this.btnSignupBanner = btnSignupBanner;
+    this.etSearch = etSearch;
     this.fabPublish = fabPublish;
     this.rvPhotoFeed = rvPhotoFeed;
+    this.tvFeedProfileInitials = tvFeedProfileInitials;
   }
 
   @Override
@@ -118,7 +130,7 @@ public final class ActivityFeedBinding implements ViewBinding {
       }
 
       id = R.id.btnProfile;
-      TextView btnProfile = ViewBindings.findChildViewById(rootView, id);
+      MaterialCardView btnProfile = ViewBindings.findChildViewById(rootView, id);
       if (btnProfile == null) {
         break missingId;
       }
@@ -135,6 +147,12 @@ public final class ActivityFeedBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.etSearch;
+      EditText etSearch = ViewBindings.findChildViewById(rootView, id);
+      if (etSearch == null) {
+        break missingId;
+      }
+
       id = R.id.fabPublish;
       FloatingActionButton fabPublish = ViewBindings.findChildViewById(rootView, id);
       if (fabPublish == null) {
@@ -147,9 +165,15 @@ public final class ActivityFeedBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tvFeedProfileInitials;
+      TextView tvFeedProfileInitials = ViewBindings.findChildViewById(rootView, id);
+      if (tvFeedProfileInitials == null) {
+        break missingId;
+      }
+
       return new ActivityFeedBinding((LinearLayout) rootView, bannerAnonymous, btnBack,
-          btnLoginBanner, btnLoginFeed, btnProfile, btnSearch, btnSignupBanner, fabPublish,
-          rvPhotoFeed);
+          btnLoginBanner, btnLoginFeed, btnProfile, btnSearch, btnSignupBanner, etSearch,
+          fabPublish, rvPhotoFeed, tvFeedProfileInitials);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

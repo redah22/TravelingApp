@@ -13,7 +13,7 @@ class DatabaseHelper private constructor(context: Context) :
 
     companion object {
         private const val DB_NAME = "travelshare.db"
-        private const val DB_VERSION = 4 // Updated for Comments table
+        private const val DB_VERSION = 5 // v5: Added groups & group_members tables
 
         const val TABLE_USERS = "users"
         const val COL_ID = "id"
@@ -46,9 +46,28 @@ class DatabaseHelper private constructor(context: Context) :
         const val COL_CMT_TEXT = "text"
         const val COL_CMT_DATE = "date"
 
+        // --- GROUPS ---
+        const val TABLE_GROUPS = "groups_tbl"
+        const val COL_GRP_ID = "grp_id"
+        const val COL_GRP_NAME = "grp_name"
+        const val COL_GRP_DESC = "grp_desc"
+        const val COL_GRP_CREATOR = "grp_creator"
+        const val COL_GRP_DATE = "grp_date"
+
+        const val TABLE_GROUP_MEMBERS = "group_members"
+        const val COL_GM_ID = "gm_id"
+        const val COL_GM_GROUP = "gm_group_id"
+        const val COL_GM_USER = "gm_user_name"
+
+        // --- FOLLOWS ---
+        const val TABLE_FOLLOWS = "follows"
+        const val COL_FOLLOW_FOLLOWER = "follower"
+        const val COL_FOLLOW_FOLLOWED = "followed"
+
         @Volatile
         private var instance: DatabaseHelper? = null
 
+        @JvmStatic
         fun getInstance(context: Context): DatabaseHelper =
             instance ?: synchronized(this) {
                 instance ?: DatabaseHelper(context).also { instance = it }
@@ -96,6 +115,30 @@ class DatabaseHelper private constructor(context: Context) :
                 $COL_CMT_DATE INTEGER NOT NULL
             )"""
         )
+        db.execSQL(
+            """CREATE TABLE $TABLE_GROUPS (
+                $COL_GRP_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COL_GRP_NAME TEXT NOT NULL,
+                $COL_GRP_DESC TEXT,
+                $COL_GRP_CREATOR TEXT NOT NULL,
+                $COL_GRP_DATE INTEGER NOT NULL
+            )"""
+        )
+        db.execSQL(
+            """CREATE TABLE $TABLE_GROUP_MEMBERS (
+                $COL_GM_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COL_GM_GROUP INTEGER NOT NULL,
+                $COL_GM_USER TEXT NOT NULL,
+                UNIQUE($COL_GM_GROUP, $COL_GM_USER)
+            )"""
+        )
+        db.execSQL(
+            """CREATE TABLE $TABLE_FOLLOWS (
+                $COL_FOLLOW_FOLLOWER TEXT NOT NULL,
+                $COL_FOLLOW_FOLLOWED TEXT NOT NULL,
+                PRIMARY KEY($COL_FOLLOW_FOLLOWER, $COL_FOLLOW_FOLLOWED)
+            )"""
+        )
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -103,6 +146,9 @@ class DatabaseHelper private constructor(context: Context) :
         db.execSQL("DROP TABLE IF EXISTS $TABLE_POSTS")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_LIKES")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_COMMENTS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_GROUPS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_GROUP_MEMBERS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_FOLLOWS")
         onCreate(db)
     }
 
@@ -169,6 +215,41 @@ class DatabaseHelper private constructor(context: Context) :
         cursor.close()
         return posts
     }
+
+    /** Retourne uniquement les posts visibles dans le fil public (scope = PUBLIC) */
+    fun recupererPostsPublics(): List<PhotoPost> {
+        val posts = mutableListOf<PhotoPost>()
+        val cursor = readableDatabase.query(
+            TABLE_POSTS, null,
+            "$COL_POST_SCOPE = ?", arrayOf(ShareScope.PUBLIC.name),
+            null, null, "$COL_POST_DATE DESC"
+        )
+        if (cursor.moveToFirst()) {
+            do {
+                posts.add(cursorToPost(cursor))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return posts
+    }
+
+    /** Retourne les posts d'un utilisateur (tous scopes confondus pour son propre profil) */
+    fun recupererPostsParUtilisateur(userName: String): List<PhotoPost> {
+        val posts = mutableListOf<PhotoPost>()
+        val cursor = readableDatabase.query(
+            TABLE_POSTS, null,
+            "$COL_POST_AUTHOR = ?", arrayOf(userName),
+            null, null, "$COL_POST_DATE DESC"
+        )
+        if (cursor.moveToFirst()) {
+            do {
+                posts.add(cursorToPost(cursor))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return posts
+    }
+
 
     private fun cursorToPost(cursor: android.database.Cursor): PhotoPost {
         val scopeStr = cursor.getString(cursor.getColumnIndexOrThrow(COL_POST_SCOPE))
@@ -280,6 +361,91 @@ class DatabaseHelper private constructor(context: Context) :
         db.delete(TABLE_POSTS, "$COL_POST_ID = ?", arrayOf(postId))
         db.delete(TABLE_LIKES, "$COL_LIKE_POST_ID = ?", arrayOf(postId))
         db.delete(TABLE_COMMENTS, "$COL_CMT_POST_ID = ?", arrayOf(postId))
+    }
+
+    // --- EMAIL ---
+    fun getEmailByName(name: String): String? {
+        val cursor = readableDatabase.query(
+            TABLE_USERS, arrayOf(COL_EMAIL), "$COL_NAME = ?", arrayOf(name), null, null, null
+        )
+        val email = if (cursor.moveToFirst()) cursor.getString(0) else null
+        cursor.close()
+        return email
+    }
+
+    // --- GROUPS ---
+    fun creerGroupe(name: String, desc: String, creator: String): Long {
+        val values = ContentValues().apply {
+            put(COL_GRP_NAME, name)
+            put(COL_GRP_DESC, desc)
+            put(COL_GRP_CREATOR, creator)
+            put(COL_GRP_DATE, System.currentTimeMillis())
+        }
+        val groupId = writableDatabase.insert(TABLE_GROUPS, null, values)
+        // Le créateur est automatiquement membre
+        if (groupId != -1L) ajouterMembreGroupe(groupId.toInt(), creator)
+        return groupId
+    }
+
+    fun recupererGroupes(): List<Triple<Int, String, String>> {
+        val list = mutableListOf<Triple<Int, String, String>>()
+        val cursor = readableDatabase.query(TABLE_GROUPS, null, null, null, null, null, "$COL_GRP_DATE DESC")
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(Triple(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COL_GRP_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COL_GRP_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COL_GRP_CREATOR))
+                ))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return list
+    }
+
+    fun ajouterMembreGroupe(groupId: Int, userName: String) {
+        val values = ContentValues().apply {
+            put(COL_GM_GROUP, groupId)
+            put(COL_GM_USER, userName)
+        }
+        writableDatabase.insertWithOnConflict(TABLE_GROUP_MEMBERS, null, values, SQLiteDatabase.CONFLICT_IGNORE)
+    }
+
+    // --- FOLLOWS ---
+    fun suivre(follower: String, followed: String) {
+        val values = ContentValues().apply {
+            put(COL_FOLLOW_FOLLOWER, follower)
+            put(COL_FOLLOW_FOLLOWED, followed)
+        }
+        writableDatabase.insertWithOnConflict(TABLE_FOLLOWS, null, values, SQLiteDatabase.CONFLICT_IGNORE)
+    }
+
+    fun seDesabonner(follower: String, followed: String) {
+        writableDatabase.delete(TABLE_FOLLOWS, "$COL_FOLLOW_FOLLOWER = ? AND $COL_FOLLOW_FOLLOWED = ?", arrayOf(follower, followed))
+    }
+
+    fun estAbonne(follower: String, followed: String): Boolean {
+        val cursor = readableDatabase.query(TABLE_FOLLOWS, null,
+            "$COL_FOLLOW_FOLLOWER = ? AND $COL_FOLLOW_FOLLOWED = ?", arrayOf(follower, followed), null, null, null)
+        val result = cursor.count > 0
+        cursor.close()
+        return result
+    }
+
+    fun getNbFollowers(userName: String): Int {
+        val cursor = readableDatabase.query(TABLE_FOLLOWS, arrayOf(COL_FOLLOW_FOLLOWER),
+            "$COL_FOLLOW_FOLLOWED = ?", arrayOf(userName), null, null, null)
+        val count = cursor.count
+        cursor.close()
+        return count
+    }
+
+    fun getNbFollowing(userName: String): Int {
+        val cursor = readableDatabase.query(TABLE_FOLLOWS, arrayOf(COL_FOLLOW_FOLLOWED),
+            "$COL_FOLLOW_FOLLOWER = ?", arrayOf(userName), null, null, null)
+        val count = cursor.count
+        cursor.close()
+        return count
     }
 }
 

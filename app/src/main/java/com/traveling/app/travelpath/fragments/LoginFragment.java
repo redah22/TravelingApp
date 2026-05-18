@@ -32,40 +32,46 @@ public class LoginFragment extends Fragment {
         etEmail = view.findViewById(R.id.etEmail);
         etPassword = view.findViewById(R.id.etPassword);
 
-        // Login button
         view.findViewById(R.id.btnLogin).setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
 
-            if (email.isEmpty()) {
-                etEmail.setError("Email requis");
-                return;
-            }
-            if (password.isEmpty()) {
-                etPassword.setError("Mot de passe requis");
-                return;
-            }
+            if (email.isEmpty()) { etEmail.setError("Email requis"); return; }
+            if (password.isEmpty()) { etPassword.setError("Mot de passe requis"); return; }
 
-            // Check credentials from SharedPreferences
             SharedPreferences prefs = getContext().getSharedPreferences("user_auth", Context.MODE_PRIVATE);
-            String savedPassword = prefs.getString("pass_" + email, null);
 
+            // ── 1. Vérification rapide via SharedPreferences ──
+            String savedPassword = prefs.getString("pass_" + email, null);
+            if (savedPassword != null && savedPassword.equals(password)) {
+                prefs.edit().putString("current_user", email).apply();
+                String username = email.contains("@") ? email.split("@")[0] : email;
+                Toast.makeText(getContext(), "Bienvenue, " + username + " !", Toast.LENGTH_SHORT).show();
+                navigateToHome();
+                return;
+            }
+
+            // ── 2. Fallback SQLite (compte créé via RegisterActivity) ──
+            com.traveling.app.travelshare.data.DatabaseHelper db =
+                com.traveling.app.travelshare.data.DatabaseHelper.getInstance(getContext());
+            String nameFromDb = db.verifierConnexion(email, password);
+            if (nameFromDb != null) {
+                // Synchroniser dans SharedPrefs pour les prochaines connexions
+                prefs.edit()
+                    .putString("pass_" + email, password)
+                    .putString("current_user", email)
+                    .apply();
+                Toast.makeText(getContext(), "Bienvenue, " + nameFromDb + " !", Toast.LENGTH_SHORT).show();
+                navigateToHome();
+                return;
+            }
+
+            // ── 3. Aucun compte trouvé ──
             if (savedPassword == null) {
                 Toast.makeText(getContext(), "Aucun compte trouvé. Inscrivez-vous d'abord.", Toast.LENGTH_SHORT).show();
-                return;
+            } else {
+                Toast.makeText(getContext(), "Mot de passe incorrect.", Toast.LENGTH_SHORT).show();
             }
-
-            if (!savedPassword.equals(password)) {
-                Toast.makeText(getContext(), "Mot de passe incorrect", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Save logged-in state
-            prefs.edit().putString("current_user", email).apply();
-            String username = email.split("@")[0];
-            Toast.makeText(getContext(), "Bienvenue, " + username + " !", Toast.LENGTH_SHORT).show();
-
-            navigateToHome();
         });
 
         // Register link

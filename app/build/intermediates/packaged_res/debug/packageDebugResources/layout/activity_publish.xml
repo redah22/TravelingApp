@@ -115,37 +115,33 @@
                 android:textColorHint="#606080" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Champ Lieu (Autocomplétion) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:boxBackgroundColor="#1A1A2E"
+            app:hintTextColor="#6C63FF"
+            android:hint="📍 Lieu de la photo...">
+
+            <AutoCompleteTextView
+                android:id="@+id/etLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="2"
+                android:textColor="#FFFFFF"
+                android:background="#1A1A2E"
+                android:padding="12dp"
+                android:textColorHint="#606080" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#2A2A3E"
             android:layout_marginVertical="16dp"/>
 
-        <!-- Option Audio -->
-        <LinearLayout
-            android:id="@+id/btnRecordAudio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="12dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true">
-            
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_btn_speak_now"
-                app:tint="#FFFFFF"/>
-                
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Ajouter une note vocale"
-                android:textColor="#E0E0E0"
-                android:textSize="16sp"/>
-        </LinearLayout>
+
 
         <!-- Option IA Tags -->
         <LinearLayout

@@ -43,6 +43,7 @@ anim m3_side_sheet_exit_to_right
 anim mtrl_bottom_sheet_slide_in
 anim mtrl_bottom_sheet_slide_out
 anim mtrl_card_lowers_interpolator
+anim slide_up_fade
 animator design_appbar_state_list_animator
 animator design_fab_hide_motion_spec
 animator design_fab_show_motion_spec
@@ -3162,6 +3163,7 @@ drawable osm_ic_follow_me
 drawable osm_ic_follow_me_on
 drawable osm_ic_ic_map_ortho
 drawable person
+drawable placeholder_post
 drawable previous
 drawable round_navigation_white_48
 drawable sharp_add_black_36
@@ -3300,7 +3302,6 @@ id btnLogout
 id btnNavigate
 id btnProfile
 id btnPublish
-id btnRecordAudio
 id btnRegenerate
 id btnRegister
 id btnReportDetail
@@ -3311,6 +3312,7 @@ id btnShare
 id btnSignupBanner
 id btnSubscribeAuthor
 id btnSwitchToFeed
+id btnTabItineraries
 id btnTabLikes
 id btnTabPhotos
 id btnWeatherChaleur
@@ -3419,9 +3421,11 @@ id etDescription
 id etDestination
 id etEmail
 id etFullName
+id etLocation
 id etMandatoryPlaces
 id etMapSearchBox
 id etPassword
+id etSearch
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -3496,6 +3500,8 @@ id list_item
 id llAddComment
 id llCommentsList
 id llPickerPlaceholder
+id lvGroups
+id lvProfileItineraries
 id m3_side_sheet
 id main
 id mapFeed
@@ -3629,7 +3635,6 @@ id right_icon
 id right_side
 id rounded
 id row_index_key
-id rvGroups
 id rvPhotoFeed
 id rvProfilePhotos
 id rvTimeline
@@ -3768,6 +3773,7 @@ id tvDetailLocation
 id tvDurationText
 id tvEffort
 id tvEmptyProfile
+id tvFeedProfileInitials
 id tvFollowersCount
 id tvFollowingCount
 id tvGoLogin
@@ -5553,3 +5559,4 @@ styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
 styleable include constraintSet
+xml file_paths

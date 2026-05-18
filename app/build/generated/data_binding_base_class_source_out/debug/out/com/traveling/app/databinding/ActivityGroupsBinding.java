@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.traveling.app.R;
@@ -29,7 +29,7 @@ public final class ActivityGroupsBinding implements ViewBinding {
   public final Button btnCreateGroup;
 
   @NonNull
-  public final RecyclerView rvGroups;
+  public final ListView lvGroups;
 
   @NonNull
   public final SwitchCompat switchFavoritePlaces;
@@ -44,13 +44,13 @@ public final class ActivityGroupsBinding implements ViewBinding {
   public final SwitchCompat switchGroupPublications;
 
   private ActivityGroupsBinding(@NonNull LinearLayout rootView, @NonNull ImageView btnBack,
-      @NonNull Button btnCreateGroup, @NonNull RecyclerView rvGroups,
+      @NonNull Button btnCreateGroup, @NonNull ListView lvGroups,
       @NonNull SwitchCompat switchFavoritePlaces, @NonNull SwitchCompat switchFollowedTags,
       @NonNull SwitchCompat switchFollowedUsers, @NonNull SwitchCompat switchGroupPublications) {
     this.rootView = rootView;
     this.btnBack = btnBack;
     this.btnCreateGroup = btnCreateGroup;
-    this.rvGroups = rvGroups;
+    this.lvGroups = lvGroups;
     this.switchFavoritePlaces = switchFavoritePlaces;
     this.switchFollowedTags = switchFollowedTags;
     this.switchFollowedUsers = switchFollowedUsers;
@@ -96,9 +96,9 @@ public final class ActivityGroupsBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.rvGroups;
-      RecyclerView rvGroups = ViewBindings.findChildViewById(rootView, id);
-      if (rvGroups == null) {
+      id = R.id.lvGroups;
+      ListView lvGroups = ViewBindings.findChildViewById(rootView, id);
+      if (lvGroups == null) {
         break missingId;
       }
 
@@ -126,7 +126,7 @@ public final class ActivityGroupsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityGroupsBinding((LinearLayout) rootView, btnBack, btnCreateGroup, rvGroups,
+      return new ActivityGroupsBinding((LinearLayout) rootView, btnBack, btnCreateGroup, lvGroups,
           switchFavoritePlaces, switchFollowedTags, switchFollowedUsers, switchGroupPublications);
     }
     String missingId = rootView.getResources().getResourceName(id);

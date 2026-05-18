@@ -23,7 +23,9 @@ class FeedActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         isAnonymous = intent.getBooleanExtra("IS_ANONYMOUS", true)
-        userName = intent.getStringExtra("USER_NAME") ?: "Voyageur"
+        userName = intent.getStringExtra("USER_NAME")
+            ?: intent.getStringExtra("CURRENT_USER_NAME")
+            ?: "Voyageur"
 
         setupUI()
         setupFeed()
@@ -47,6 +49,11 @@ class FeedActivity : AppCompatActivity() {
             binding.fabPublish.visibility = View.VISIBLE
             binding.btnProfile.visibility = View.VISIBLE
             binding.btnLoginFeed.visibility = View.GONE
+            
+            val tvInitial = binding.root.findViewById<android.widget.TextView>(com.traveling.app.R.id.tvFeedProfileInitials)
+            if (tvInitial != null) {
+                tvInitial.text = userName.firstOrNull()?.uppercase() ?: "V"
+            }
 
             binding.btnProfile.setOnClickListener {
                 val intent = Intent(this, ProfileActivity::class.java)
@@ -61,8 +68,26 @@ class FeedActivity : AppCompatActivity() {
         }
 
         binding.btnSearch.setOnClickListener {
-            Toast.makeText(this, "Recherche (Lieu, auteur, tag...)", Toast.LENGTH_SHORT).show()
+            if (binding.etSearch.visibility == View.VISIBLE) {
+                binding.etSearch.visibility = View.GONE
+                binding.etSearch.text.clear()
+                val imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+                imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+            } else {
+                binding.etSearch.visibility = View.VISIBLE
+                binding.etSearch.requestFocus()
+                val imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+                imm.showSoftInput(binding.etSearch, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
+            }
         }
+
+        binding.etSearch.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {
+                filterFeed(s?.toString()?.trim()?.lowercase() ?: "")
+            }
+        })
 
         binding.btnLoginFeed.setOnClickListener {
             finish() // Retour au menu principal
@@ -75,56 +100,33 @@ class FeedActivity : AppCompatActivity() {
 
     private val publishLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            val description = result.data?.getStringExtra("DESCRIPTION") ?: ""
-            val imageUri = result.data?.getStringExtra("IMAGE_URI") ?: ""
-            val visibilityStr = result.data?.getStringExtra("VISIBILITY") ?: "PUBLIC"
-            
-            val scope = try {
-                ShareScope.valueOf(visibilityStr)
-            } catch (e: Exception) {
-                ShareScope.PUBLIC
-            }
-
-            if (description.isNotEmpty()) {
-                val newPost = PhotoPost(
-                    id = "p${System.currentTimeMillis()}",
-                    autheur = User("u_me", userName, "@me", ""),
-                    photoUrl = imageUri,
-                    descriptionText = description,
-                    lieuNom = "Localisation actuelle",
-                    latitude = 0.0,
-                    longitude = 0.0,
-                    datePublicationMillis = System.currentTimeMillis(),
-                    scope = scope
-                )
-                
-                com.traveling.app.travelshare.data.DatabaseHelper.getInstance(this).insererPost(newPost)
-                
-                postsList.add(0, newPost)
-                adapter.notifyItemInserted(0)
-                binding.rvPhotoFeed.scrollToPosition(0)
-            }
+            setupFeed()
         }
     }
 
     private var postsList = mutableListOf<PhotoPost>()
+    private var currentDisplayList = mutableListOf<PhotoPost>()
     private lateinit var adapter: PhotoPostAdapter
 
     private fun setupFeed() {
         val dbHelper = com.traveling.app.travelshare.data.DatabaseHelper.getInstance(this)
-        var savedPosts = dbHelper.recupererTousLesPosts()
+        // Seuls les posts PUBLIC sont visibles dans le fil public
+        var savedPosts = dbHelper.recupererPostsPublics()
 
         if (savedPosts.isEmpty()) {
             val mockPhotos = generateMockPhotos()
             mockPhotos.forEach { dbHelper.insererPost(it) }
-            savedPosts = dbHelper.recupererTousLesPosts()
+            savedPosts = dbHelper.recupererPostsPublics()
         }
 
         postsList.clear()
         postsList.addAll(savedPosts)
 
+        currentDisplayList.clear()
+        currentDisplayList.addAll(postsList)
+
         adapter = PhotoPostAdapter(
-            posts = postsList,
+            posts = currentDisplayList,
             onLikeClicked = { post ->
                 if (isAnonymous) {
                     Toast.makeText(this, "Connectez-vous pour liker.", Toast.LENGTH_SHORT).show()
@@ -134,10 +136,14 @@ class FeedActivity : AppCompatActivity() {
                     val action = if (wasLiked) "aimé" else "retiré"
                     Toast.makeText(this, "❤️ Vous avez $action la photo de ${post.autheur.nomComplet} !", Toast.LENGTH_SHORT).show()
                     
-                    // Rafraîchir les données pour mettre à jour le compteur
-                    val updatedPosts = dbHelper.recupererTousLesPosts()
+                    // Rafraîchir les données pour mettre à jour le compteur (publics uniquement)
+                    val updatedPosts = dbHelper.recupererPostsPublics()
                     postsList.clear()
                     postsList.addAll(updatedPosts)
+                    
+                    // Mettre à jour la liste affichée
+                    currentDisplayList.clear()
+                    currentDisplayList.addAll(postsList)
                     adapter.notifyDataSetChanged()
                 }
             },
@@ -166,6 +172,20 @@ class FeedActivity : AppCompatActivity() {
         )
         binding.rvPhotoFeed.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         binding.rvPhotoFeed.adapter = adapter
+    }
+
+    private fun filterFeed(query: String) {
+        currentDisplayList.clear()
+        if (query.isEmpty()) {
+            currentDisplayList.addAll(postsList)
+        } else {
+            currentDisplayList.addAll(postsList.filter {
+                it.lieuNom.lowercase().contains(query) ||
+                it.descriptionText.lowercase().contains(query) ||
+                it.autheur.nomComplet.lowercase().contains(query)
+            })
+        }
+        adapter.notifyDataSetChanged()
     }
 
     private fun generateMockPhotos(): List<PhotoPost> {

@@ -28,41 +28,50 @@ class ProfileActivity : AppCompatActivity() {
     private fun loadProfileInfos() {
         binding.tvProfileName.text = userName
         binding.tvProfileInitials.text = userName.firstOrNull()?.uppercase() ?: "V"
-        
+
+        val dbHelper = com.traveling.app.travelshare.data.DatabaseHelper.getInstance(this)
+
         if (isAnonymous) {
             binding.tvProfileEmail.text = "Mode découverte (Non connecté)"
         } else {
-            binding.tvProfileEmail.text = "${userName.lowercase().replace(" ",".")}@travelshare.com"
+            val realEmail = dbHelper.getEmailByName(userName)
+            binding.tvProfileEmail.text = realEmail ?: "$userName @travelshare"
         }
 
-        val dbHelper = com.traveling.app.travelshare.data.DatabaseHelper.getInstance(this)
         val allPosts = dbHelper.recupererTousLesPosts()
         val userPosts = allPosts.filter { it.autheur.nomComplet == userName }
 
         binding.tvPhotosCount.text = userPosts.size.toString()
-        
+
         val totalLikes = userPosts.sumOf { it.likesCount }
         binding.tvLikesCount.text = totalLikes.toString()
 
-        binding.tvFollowersCount.text = (userPosts.size * 5 + 12).toString() 
-        binding.tvFollowingCount.text = "18"
+        binding.tvFollowersCount.text = dbHelper.getNbFollowers(userName).toString()
+        binding.tvFollowingCount.text = dbHelper.getNbFollowing(userName).toString()
     }
 
     private fun setupListeners() {
         binding.btnBack.setOnClickListener { finish() }
 
         binding.btnTabPhotos.setOnClickListener {
-            updateTabStyles(showFavoris = false)
+            updateTabStyles(0)
             loadPosts(showFavoris = false)
         }
 
         binding.btnTabLikes.setOnClickListener {
-            updateTabStyles(showFavoris = true)
+            updateTabStyles(1)
             loadPosts(showFavoris = true)
         }
 
+        binding.btnTabItineraries.setOnClickListener {
+            updateTabStyles(2)
+            loadItineraries()
+        }
+
         binding.btnGroupes.setOnClickListener {
-            Toast.makeText(this, "Vos cercles de voyage (Bientôt disponible)", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, GroupsActivity::class.java)
+            intent.putExtra("USER_NAME", userName)
+            startActivity(intent)
         }
 
         binding.btnLogout.setOnClickListener {
@@ -74,21 +83,59 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateTabStyles(showFavoris: Boolean) {
-        if (showFavoris) {
-            binding.btnTabLikes.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#6C63FF")))
-            binding.btnTabLikes.setTextColor(android.graphics.Color.WHITE)
-            binding.btnTabPhotos.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.TRANSPARENT))
-            binding.btnTabPhotos.setTextColor(android.graphics.Color.parseColor("#A0A0C0"))
-        } else {
-            binding.btnTabPhotos.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#6C63FF")))
-            binding.btnTabPhotos.setTextColor(android.graphics.Color.WHITE)
-            binding.btnTabLikes.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.TRANSPARENT))
-            binding.btnTabLikes.setTextColor(android.graphics.Color.parseColor("#A0A0C0"))
+    private fun updateTabStyles(tabIndex: Int) {
+        val activeBg = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#6C63FF"))
+        val activeColor = android.graphics.Color.WHITE
+        val inactiveBg = android.content.res.ColorStateList.valueOf(android.graphics.Color.TRANSPARENT)
+        val inactiveColor = android.graphics.Color.parseColor("#A0A0C0")
+
+        binding.btnTabPhotos.setBackgroundTintList(if (tabIndex == 0) activeBg else inactiveBg)
+        binding.btnTabPhotos.setTextColor(if (tabIndex == 0) activeColor else inactiveColor)
+        
+        binding.btnTabLikes.setBackgroundTintList(if (tabIndex == 1) activeBg else inactiveBg)
+        binding.btnTabLikes.setTextColor(if (tabIndex == 1) activeColor else inactiveColor)
+
+        binding.btnTabItineraries.setBackgroundTintList(if (tabIndex == 2) activeBg else inactiveBg)
+        binding.btnTabItineraries.setTextColor(if (tabIndex == 2) activeColor else inactiveColor)
+    }
+
+    private fun loadItineraries() {
+        binding.rvProfilePhotos.visibility = android.view.View.GONE
+        
+        val prefs = getSharedPreferences("saved_itineraries", android.content.Context.MODE_PRIVATE)
+        val existing = prefs.getString("itineraries_list", "[]") ?: "[]"
+        
+        try {
+            val jsonArray = org.json.JSONArray(existing)
+            val listItems = mutableListOf<String>()
+            
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+                val dest = obj.optString("destination", "Inconnu")
+                val budget = obj.optInt("totalBudget", 0)
+                val hours = obj.optInt("totalHours", 0)
+                listItems.add("🗺️ $dest - $budget € - ${hours}h")
+            }
+            
+            if (listItems.isEmpty()) {
+                binding.lvProfileItineraries.visibility = android.view.View.GONE
+                binding.tvEmptyProfile.visibility = android.view.View.VISIBLE
+                binding.tvEmptyProfile.text = "Aucun itinéraire sauvegardé."
+            } else {
+                binding.lvProfileItineraries.visibility = android.view.View.VISIBLE
+                binding.tvEmptyProfile.visibility = android.view.View.GONE
+                
+                val adapter = android.widget.ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
+                binding.lvProfileItineraries.adapter = adapter
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     private fun loadPosts(showFavoris: Boolean) {
+        binding.lvProfileItineraries.visibility = android.view.View.GONE
+
         val dbHelper = com.traveling.app.travelshare.data.DatabaseHelper.getInstance(this)
         
         val displayPosts = if (showFavoris) {

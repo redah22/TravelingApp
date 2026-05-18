@@ -1,5 +1,6 @@
 package com.traveling.app.travelshare.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,59 +12,82 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.traveling.app.R
 import com.traveling.app.databinding.ActivityMapFeedBinding
+import com.traveling.app.travelshare.data.DatabaseHelper
 import com.traveling.app.travelshare.models.PhotoPost
 
 class MapFeedActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityMapFeedBinding
     private var mMap: GoogleMap? = null
-
-    // Simuler quelques données partagées depuis le flux
-    private val fakePhotoLocations = listOf(
-        LatLng(48.8566, 2.3522),  // Paris
-        LatLng(-8.4095, 115.1889), // Bali
-        LatLng(45.9237, 6.8694)   // Chamonix
-    )
+    private var postsList: List<PhotoPost> = emptyList()
+    private var isAnonymous = true
+    private var currentUserName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapFeedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Init la carte
+        isAnonymous = intent.getBooleanExtra("IS_ANONYMOUS", true)
+        currentUserName = intent.getStringExtra("CURRENT_USER_NAME") ?: ""
+
+        // Charger les vrais posts depuis la BDD
+        postsList = DatabaseHelper.getInstance(this)
+            .recupererPostsPublics()
+            .filter { it.latitude != 0.0 && it.longitude != 0.0 }
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.mapFeed) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        
+
         setupListeners()
     }
 
     private fun setupListeners() {
-        binding.btnSwitchToFeed.setOnClickListener {
-            // Retour au feed Liste/Grille
-            finish()
-        }
+        binding.btnSwitchToFeed.setOnClickListener { finish() }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Placer les photos sur la carte sous forme de Pins
-        for ((index, latLng) in fakePhotoLocations.withIndex()) {
+        if (postsList.isEmpty()) {
+            Toast.makeText(this, "Aucune publication géolocalisée pour le moment.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        for (post in postsList) {
+            val latLng = LatLng(post.latitude, post.longitude)
             mMap?.addMarker(
                 MarkerOptions()
                     .position(latLng)
-                    .title("Photo de voyage #\${index + 1}")
-                    .snippet("Cliquez pour voir la photo...")
-            )
+                    .title(post.autheur.nomComplet)
+                    .snippet(post.lieuNom)
+            )?.tag = post.id
         }
 
-        // Action quand on clique sur le résumé d'un Pin
+        // Click sur un pin → ouvrir le détail du post
         mMap?.setOnInfoWindowClickListener { marker ->
-            Toast.makeText(this, "Ouverture du détail de \${marker.title}", Toast.LENGTH_SHORT).show()
+            val postId = marker.tag as? String ?: return@setOnInfoWindowClickListener
+            val post = postsList.find { it.id == postId } ?: return@setOnInfoWindowClickListener
+            val intent = Intent(this, PhotoDetailActivity::class.java).apply {
+                putExtra("POST_ID", post.id)
+                putExtra("IS_ANONYMOUS", isAnonymous)
+                putExtra("AUTHOR_NAME", post.autheur.nomComplet)
+                putExtra("LOCATION", post.lieuNom)
+                putExtra("DESCRIPTION", post.descriptionText)
+                putExtra("LIKES", post.likesCount)
+                putExtra("COMMENTS", post.commentsCount)
+                putExtra("PHOTO_URL", post.photoUrl)
+                putExtra("LATITUDE", post.latitude)
+                putExtra("LONGITUDE", post.longitude)
+                putExtra("CURRENT_USER_NAME", currentUserName)
+            }
+            startActivity(intent)
         }
 
-        // Focus caméra (Global)
-        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(fakePhotoLocations[0], 2f))
+        // Centrer la carte sur le premier post
+        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
+            LatLng(postsList[0].latitude, postsList[0].longitude), 5f
+        ))
     }
 }

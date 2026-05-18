@@ -30,6 +30,7 @@ class PhotoPostAdapter(
         val btnComment: View = view.findViewById(R.id.btnComment)
         val tvCommentsCount: TextView = view.findViewById(R.id.tvCommentsCount)
         val tvLocation: TextView = view.findViewById(R.id.tvLocation)
+        val tvDescription: TextView = view.findViewById(R.id.tvDescription)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -45,21 +46,26 @@ class PhotoPostAdapter(
 
         holder.tvAvatarInitials.text = initials
         holder.tvAuthorName.text = name
-        holder.tvDate.text = formatDate(post.datePublicationMillis)
+        holder.tvDate.text = formatDateRelative(post.datePublicationMillis)
         holder.tvLikesCount.text = post.likesCount.toString()
         holder.tvCommentsCount.text = post.commentsCount.toString()
-        holder.tvLocation.text = post.lieuNom
+        holder.tvLocation.text = "📍 ${post.lieuNom}"
+        holder.tvDescription.text = post.descriptionText
+
+        // Accessibilité TalkBack
+        holder.itemView.contentDescription = "Photo de $name à ${post.lieuNom}. ${post.likesCount} j'aime."
 
         if (post.photoUrl.isNotEmpty()) {
             Glide.with(holder.itemView.context)
                 .load(post.photoUrl)
-                .placeholder(android.R.drawable.ic_menu_gallery)
-                .error(android.R.drawable.ic_menu_report_image)
+                .placeholder(R.drawable.placeholder_post)
+                .error(R.drawable.placeholder_post)
                 .centerCrop()
                 .into(holder.ivPhoto)
         } else {
-            holder.ivPhoto.setImageResource(android.R.drawable.ic_menu_gallery)
+            holder.ivPhoto.setImageResource(R.drawable.placeholder_post)
         }
+        holder.ivPhoto.contentDescription = "Photo de voyage à ${post.lieuNom}"
 
         holder.itemView.setOnClickListener { onPostClicked(post) }
         holder.btnLike.setOnClickListener { onLikeClicked(post) }
@@ -68,9 +74,19 @@ class PhotoPostAdapter(
 
     override fun getItemCount() = posts.size
 
-    private fun formatDate(millis: Long): String {
-        val sdf = SimpleDateFormat("d MMMM yyyy", Locale.FRENCH)
-        return sdf.format(Date(millis))
+    private fun formatDateRelative(millis: Long): String {
+        val diffMs = System.currentTimeMillis() - millis
+        val diffMin = diffMs / 60_000
+        val diffH = diffMs / 3_600_000
+        val diffD = diffMs / 86_400_000
+        return when {
+            diffMin < 1  -> "À l'instant"
+            diffMin < 60 -> "Il y a ${diffMin}min"
+            diffH < 24   -> "Il y a ${diffH}h"
+            diffD == 1L  -> "Hier"
+            diffD < 7    -> "Il y a ${diffD}j"
+            else         -> SimpleDateFormat("d MMM yyyy", Locale.FRENCH).format(Date(millis))
+        }
     }
 
     fun updateData(newPosts: List<PhotoPost>) {

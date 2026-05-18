@@ -95,7 +95,7 @@
 53-->[org.osmdroid:osmdroid-android:6.1.18] /Users/redah/.gradle/caches/8.9/transforms/f5cdd3fd980de36d8a939e75d1852b66/transformed/jetified-osmdroid-android-6.1.18/AndroidManifest.xml:25:9-33
 54
 55    <application
-55-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:13:5-46:19
+55-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:13:5-57:19
 56        android:allowBackup="true"
 56-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:15:9-35
 57        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -110,160 +110,175 @@
 62-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:18:9-54
 63        android:supportsRtl="true"
 63-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:19:9-35
-64        android:testOnly="true"
-65        android:theme="@style/Theme.Traveling"
-65-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:20:9-47
-66        android:usesCleartextTraffic="true" >
-66-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:14:9-44
-67        <activity
-67-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:22:9-30:20
-68            android:name="com.traveling.app.travelpath.MainActivity"
-68-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:23:13-52
-69            android:exported="true"
-69-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:24:13-36
-70            android:theme="@style/Theme.TravelPath" >
-70-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:25:13-52
-71            <intent-filter>
-71-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:26:13-29:29
-72                <action android:name="android.intent.action.MAIN" />
-72-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:27:17-69
-72-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:27:25-66
-73
-74                <category android:name="android.intent.category.LAUNCHER" />
-74-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:28:17-77
-74-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:28:27-74
-75            </intent-filter>
-76        </activity>
-77        <activity android:name="com.traveling.app.travelshare.ui.HomeActivity" />
-77-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:32:9-65
-77-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:32:19-62
-78        <activity android:name="com.traveling.app.travelshare.ui.LoginActivity" />
-78-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:34:9-66
-78-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:34:19-63
-79        <activity android:name="com.traveling.app.travelshare.ui.RegisterActivity" />
-79-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:35:9-69
-79-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:35:19-66
-80        <activity android:name="com.traveling.app.travelshare.ui.FeedActivity" />
-80-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:36:9-65
-80-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:36:19-62
-81        <activity android:name="com.traveling.app.travelshare.ui.MapFeedActivity" />
-81-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:37:9-68
-81-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:37:19-65
-82        <activity android:name="com.traveling.app.travelshare.ui.PhotoDetailActivity" />
-82-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:38:9-72
-82-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:38:19-69
-83        <activity android:name="com.traveling.app.travelshare.ui.PublishActivity" />
-83-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:39:9-68
-83-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:39:19-65
-84        <activity android:name="com.traveling.app.travelshare.ui.ProfileActivity" />
-84-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:40:9-68
-84-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:40:19-65
-85        <activity android:name="com.traveling.app.travelshare.ui.GroupsActivity" />
-85-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:41:9-67
-85-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:41:19-64
-86
-87        <meta-data
-88            android:name="com.google.android.geo.API_KEY"
-88-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:44:13-58
-89            android:value="YOUR_MAPS_API_KEY" />
-89-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:45:13-44
-90
-91        <provider
-91-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-92            android:name="androidx.startup.InitializationProvider"
-92-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
-93            android:authorities="com.traveling.app.androidx-startup"
-93-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
-94            android:exported="false" >
-94-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+64        android:theme="@style/Theme.Traveling"
+64-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:20:9-47
+65        android:usesCleartextTraffic="true" >
+65-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:14:9-44
+66        <activity
+66-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:22:9-30:20
+67            android:name="com.traveling.app.travelpath.MainActivity"
+67-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:23:13-52
+68            android:exported="true"
+68-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:24:13-36
+69            android:theme="@style/Theme.TravelPath" >
+69-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:25:13-52
+70            <intent-filter>
+70-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:26:13-29:29
+71                <action android:name="android.intent.action.MAIN" />
+71-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:27:17-69
+71-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:27:25-66
+72
+73                <category android:name="android.intent.category.LAUNCHER" />
+73-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:28:17-77
+73-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:28:27-74
+74            </intent-filter>
+75        </activity>
+76        <activity android:name="com.traveling.app.travelshare.ui.HomeActivity" />
+76-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:32:9-65
+76-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:32:19-62
+77        <activity android:name="com.traveling.app.travelshare.ui.LoginActivity" />
+77-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:34:9-66
+77-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:34:19-63
+78        <activity android:name="com.traveling.app.travelshare.ui.RegisterActivity" />
+78-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:35:9-69
+78-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:35:19-66
+79        <activity android:name="com.traveling.app.travelshare.ui.FeedActivity" />
+79-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:36:9-65
+79-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:36:19-62
+80        <activity android:name="com.traveling.app.travelshare.ui.MapFeedActivity" />
+80-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:37:9-68
+80-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:37:19-65
+81        <activity android:name="com.traveling.app.travelshare.ui.PhotoDetailActivity" />
+81-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:38:9-72
+81-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:38:19-69
+82        <activity android:name="com.traveling.app.travelshare.ui.PublishActivity" />
+82-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:39:9-68
+82-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:39:19-65
+83        <activity android:name="com.traveling.app.travelshare.ui.ProfileActivity" />
+83-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:40:9-68
+83-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:40:19-65
+84        <activity android:name="com.traveling.app.travelshare.ui.GroupsActivity" />
+84-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:41:9-67
+84-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:41:19-64
+85
+86        <meta-data
+87            android:name="com.google.android.geo.API_KEY"
+87-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:44:13-58
+88            android:value="YOUR_MAPS_API_KEY" />
+88-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:45:13-44
+89
+90        <provider
+91            android:name="androidx.core.content.FileProvider"
+91-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:48:13-62
+92            android:authorities="com.traveling.app.fileprovider"
+92-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:49:13-64
+93            android:exported="false"
+93-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:50:13-37
+94            android:grantUriPermissions="true" >
+94-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:51:13-47
 95            <meta-data
-95-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-96                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-96-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
-97                android:value="androidx.startup" />
-97-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
-98            <meta-data
-98-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/redah/.gradle/caches/8.9/transforms/f24d45c6175125c183f925dd024c76e8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
-99                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-99-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/redah/.gradle/caches/8.9/transforms/f24d45c6175125c183f925dd024c76e8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
-100                android:value="androidx.startup" />
-100-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/redah/.gradle/caches/8.9/transforms/f24d45c6175125c183f925dd024c76e8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
-101            <meta-data
-101-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-102                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-102-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
-103                android:value="androidx.startup" />
-103-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
-104        </provider> <!-- Needs to be explicitly declared on P+ -->
-105        <uses-library
-105-->[com.google.android.gms:play-services-maps:18.2.0] /Users/redah/.gradle/caches/8.9/transforms/57eb9d304f1ea8bfa01b5c398db895bb/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:39:9-41:40
-106            android:name="org.apache.http.legacy"
-106-->[com.google.android.gms:play-services-maps:18.2.0] /Users/redah/.gradle/caches/8.9/transforms/57eb9d304f1ea8bfa01b5c398db895bb/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:40:13-50
-107            android:required="false" />
-107-->[com.google.android.gms:play-services-maps:18.2.0] /Users/redah/.gradle/caches/8.9/transforms/57eb9d304f1ea8bfa01b5c398db895bb/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:41:13-37
-108
-109        <activity
-109-->[com.google.android.gms:play-services-base:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/25941d8a19f5be64e6aba28688a3d62e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:9-22:45
-110            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-110-->[com.google.android.gms:play-services-base:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/25941d8a19f5be64e6aba28688a3d62e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:19-85
-111            android:exported="false"
-111-->[com.google.android.gms:play-services-base:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/25941d8a19f5be64e6aba28688a3d62e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:22:19-43
-112            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-112-->[com.google.android.gms:play-services-base:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/25941d8a19f5be64e6aba28688a3d62e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:21:19-78
-113
-114        <meta-data
-114-->[com.google.android.gms:play-services-basement:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/6316a75ff6933a0e19c103d2b8aed8e5/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
-115            android:name="com.google.android.gms.version"
-115-->[com.google.android.gms:play-services-basement:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/6316a75ff6933a0e19c103d2b8aed8e5/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
-116            android:value="@integer/google_play_services_version" />
-116-->[com.google.android.gms:play-services-basement:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/6316a75ff6933a0e19c103d2b8aed8e5/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
-117
-118        <service
-118-->[androidx.room:room-runtime:2.6.1] /Users/redah/.gradle/caches/8.9/transforms/76dc6a3e73a32f85000ca07c5fd1128d/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
-119            android:name="androidx.room.MultiInstanceInvalidationService"
-119-->[androidx.room:room-runtime:2.6.1] /Users/redah/.gradle/caches/8.9/transforms/76dc6a3e73a32f85000ca07c5fd1128d/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
-120            android:directBootAware="true"
-120-->[androidx.room:room-runtime:2.6.1] /Users/redah/.gradle/caches/8.9/transforms/76dc6a3e73a32f85000ca07c5fd1128d/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
-121            android:exported="false" />
-121-->[androidx.room:room-runtime:2.6.1] /Users/redah/.gradle/caches/8.9/transforms/76dc6a3e73a32f85000ca07c5fd1128d/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
-122
-123        <receiver
-123-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-124            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-124-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
-125            android:directBootAware="false"
-125-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
-126            android:enabled="true"
-126-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
-127            android:exported="true"
-127-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-128            android:permission="android.permission.DUMP" >
-128-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
-129            <intent-filter>
-129-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
-130                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-130-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-130-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
-131            </intent-filter>
-132            <intent-filter>
-132-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
-133                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-133-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-133-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
-134            </intent-filter>
-135            <intent-filter>
-135-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
-136                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-136-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-136-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
-137            </intent-filter>
-138            <intent-filter>
-138-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
-139                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-139-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-139-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
-140            </intent-filter>
-141        </receiver>
-142    </application>
-143
-144</manifest>
+95-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:52:13-54:54
+96                android:name="android.support.FILE_PROVIDER_PATHS"
+96-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:53:17-67
+97                android:resource="@xml/file_paths" />
+97-->/Users/redah/Documents/cours/M1/S8/prog_mobile/Projet/TravelingApp/app/src/main/AndroidManifest.xml:54:17-51
+98        </provider>
+99        <provider
+99-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+100            android:name="androidx.startup.InitializationProvider"
+100-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+101            android:authorities="com.traveling.app.androidx-startup"
+101-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+102            android:exported="false" >
+102-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+103            <meta-data
+103-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+104                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+104-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+105                android:value="androidx.startup" />
+105-->[androidx.emoji2:emoji2:1.2.0] /Users/redah/.gradle/caches/8.9/transforms/da09c0cf64c5460e0a794dfa31c7eb64/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+106            <meta-data
+106-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/redah/.gradle/caches/8.9/transforms/f24d45c6175125c183f925dd024c76e8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+107                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+107-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/redah/.gradle/caches/8.9/transforms/f24d45c6175125c183f925dd024c76e8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+108                android:value="androidx.startup" />
+108-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/redah/.gradle/caches/8.9/transforms/f24d45c6175125c183f925dd024c76e8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+109            <meta-data
+109-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+110                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+110-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+111                android:value="androidx.startup" />
+111-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+112        </provider> <!-- Needs to be explicitly declared on P+ -->
+113        <uses-library
+113-->[com.google.android.gms:play-services-maps:18.2.0] /Users/redah/.gradle/caches/8.9/transforms/57eb9d304f1ea8bfa01b5c398db895bb/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:39:9-41:40
+114            android:name="org.apache.http.legacy"
+114-->[com.google.android.gms:play-services-maps:18.2.0] /Users/redah/.gradle/caches/8.9/transforms/57eb9d304f1ea8bfa01b5c398db895bb/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:40:13-50
+115            android:required="false" />
+115-->[com.google.android.gms:play-services-maps:18.2.0] /Users/redah/.gradle/caches/8.9/transforms/57eb9d304f1ea8bfa01b5c398db895bb/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:41:13-37
+116
+117        <activity
+117-->[com.google.android.gms:play-services-base:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/25941d8a19f5be64e6aba28688a3d62e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:9-22:45
+118            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+118-->[com.google.android.gms:play-services-base:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/25941d8a19f5be64e6aba28688a3d62e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:19-85
+119            android:exported="false"
+119-->[com.google.android.gms:play-services-base:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/25941d8a19f5be64e6aba28688a3d62e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:22:19-43
+120            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+120-->[com.google.android.gms:play-services-base:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/25941d8a19f5be64e6aba28688a3d62e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:21:19-78
+121
+122        <meta-data
+122-->[com.google.android.gms:play-services-basement:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/6316a75ff6933a0e19c103d2b8aed8e5/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
+123            android:name="com.google.android.gms.version"
+123-->[com.google.android.gms:play-services-basement:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/6316a75ff6933a0e19c103d2b8aed8e5/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
+124            android:value="@integer/google_play_services_version" />
+124-->[com.google.android.gms:play-services-basement:18.1.0] /Users/redah/.gradle/caches/8.9/transforms/6316a75ff6933a0e19c103d2b8aed8e5/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
+125
+126        <service
+126-->[androidx.room:room-runtime:2.6.1] /Users/redah/.gradle/caches/8.9/transforms/76dc6a3e73a32f85000ca07c5fd1128d/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
+127            android:name="androidx.room.MultiInstanceInvalidationService"
+127-->[androidx.room:room-runtime:2.6.1] /Users/redah/.gradle/caches/8.9/transforms/76dc6a3e73a32f85000ca07c5fd1128d/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
+128            android:directBootAware="true"
+128-->[androidx.room:room-runtime:2.6.1] /Users/redah/.gradle/caches/8.9/transforms/76dc6a3e73a32f85000ca07c5fd1128d/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
+129            android:exported="false" />
+129-->[androidx.room:room-runtime:2.6.1] /Users/redah/.gradle/caches/8.9/transforms/76dc6a3e73a32f85000ca07c5fd1128d/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
+130
+131        <receiver
+131-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+132            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+132-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+133            android:directBootAware="false"
+133-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+134            android:enabled="true"
+134-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+135            android:exported="true"
+135-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+136            android:permission="android.permission.DUMP" >
+136-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+137            <intent-filter>
+137-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+138                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+138-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+138-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+139            </intent-filter>
+140            <intent-filter>
+140-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+141                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+141-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+141-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+142            </intent-filter>
+143            <intent-filter>
+143-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+144                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+144-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+144-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+145            </intent-filter>
+146            <intent-filter>
+146-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+147                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+147-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+147-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/redah/.gradle/caches/8.9/transforms/57b433fab9c589d3455dd0a7222ebae1/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+148            </intent-filter>
+149        </receiver>
+150    </application>
+151
+152</manifest>

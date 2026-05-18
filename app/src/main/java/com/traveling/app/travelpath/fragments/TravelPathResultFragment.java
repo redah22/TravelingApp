@@ -57,6 +57,7 @@ public class TravelPathResultFragment extends Fragment {
     private TabLayout tabLayout;
     private MapView mapView;
     private List<TripStep> currentSteps = new ArrayList<>();
+    private List<TripStep> allGeneratedSteps = new ArrayList<>();
 
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -68,6 +69,7 @@ public class TravelPathResultFragment extends Fragment {
     private int userDuration = 1;
     private String userEffort = "MODERE";
     private String userWeather = null;
+    private List<String> userMandatoryPlaces = new ArrayList<>();
 
     // Weather data
     private String weatherDescription = "";
@@ -94,6 +96,7 @@ public class TravelPathResultFragment extends Fragment {
             userDuration = getArguments().getInt("duration", 1);
             userEffort = getArguments().getString("effort", "MODERE");
             userWeather = getArguments().getString("weather", null);
+            userMandatoryPlaces = getArguments().getStringArrayList("mandatoryPlaces");
         }
 
         rvTimeline = view.findViewById(R.id.rvTimeline);
@@ -110,10 +113,12 @@ public class TravelPathResultFragment extends Fragment {
         // Fetch weather first, then generate itinerary
         fetchWeather(() -> generateItinerary("Economique"));
 
+        tabLayout.setVisibility(View.VISIBLE);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                generateItinerary(tab.getText().toString());
+                int selectedDay = tab.getPosition() + 1; // 0-based index
+                filterStepsForDay(selectedDay);
             }
 
             @Override
@@ -264,12 +269,14 @@ public class TravelPathResultFragment extends Fragment {
                     tags.append("node[\"tourism\"=\"attraction\"](around:10000,").append(baseLat).append(",").append(baseLon).append(");");
                 }
 
-                // Limit results based on plan type
-                int maxResults = 6;
-                if (planName.contains("quilibr")) maxResults = 5;
-                else if (planName.contains("onfort")) maxResults = 4;
+                // Limit results based on plan type and duration
+                int stepsPerDay = 6;
+                if (planName.contains("quilibr")) stepsPerDay = 5;
+                else if (planName.contains("onfort")) stepsPerDay = 4;
+                
+                int maxResults = stepsPerDay * userDuration;
 
-                String query = "[out:json];(" + tags.toString() + ");out " + (maxResults + 2) + ";";
+                String query = "[out:json];(" + tags.toString() + ");out " + (maxResults + 5) + ";";
                 URL url = new URL("https://overpass-api.de/api/interpreter?data=" + java.net.URLEncoder.encode(query, "UTF-8"));
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -286,16 +293,7 @@ public class TravelPathResultFragment extends Fragment {
 
                 List<TripStep> realPlaces = new ArrayList<>();
                 int hour = 9;
-
-                // Budget multiplier based on plan type
-                int budgetPerStep;
-                if (planName.contains("onfort")) {
-                    budgetPerStep = userBudget / 3;
-                } else if (planName.contains("quilibr")) {
-                    budgetPerStep = userBudget / 5;
-                } else {
-                    budgetPerStep = userBudget / 8;
-                }
+                int currentDay = 1;
 
                 // Duration per step based on effort
                 int durationPerStep = 2; // hours
@@ -303,6 +301,49 @@ public class TravelPathResultFragment extends Fragment {
                 else if (userEffort.equals("ELEVE")) durationPerStep = 3;
 
                 double prevLat = baseLat, prevLon = baseLon;
+
+                // Intégration des lieux impératifs saisis par l'utilisateur
+                int stepIndex = 0;
+                if (userMandatoryPlaces != null) {
+                    for (String placeName : userMandatoryPlaces) {
+                        String trimmed = placeName.trim();
+                        if (trimmed.isEmpty()) continue;
+                        
+                        // Créer des coordonnées légèrement décalées autour de la destination
+                        double lat = baseLat + (stepIndex * 0.003 - 0.001);
+                        double lon = baseLon + (stepIndex * 0.003 + 0.001);
+
+                        String timeSlot;
+                        if (hour < 12) {
+                            timeSlot = String.format("Jour %d • %02d:00 - %02d:00 (Matin)", currentDay, hour, hour + durationPerStep);
+                        } else if (hour < 18) {
+                            timeSlot = String.format("Jour %d • %02d:00 - %02d:00 (Après-midi)", currentDay, hour, hour + durationPerStep);
+                        } else {
+                            timeSlot = String.format("Jour %d • %02d:00 - %02d:00 (Soir)", currentDay, hour, hour + durationPerStep);
+                        }
+
+                        TripStep step = new TripStep(trimmed, "Visite impérative planifiée", timeSlot, getRealisticBudget("attraction", planName), lat, lon, "Découverte (Requis)", null);
+
+                        if (!realPlaces.isEmpty()) {
+                            double dist = haversineKm(prevLat, prevLon, lat, lon);
+                            int walkMinutes = (int) (dist / 5.0 * 60);
+                            String transportEmoji = walkMinutes <= 20 ? "🚶" : "🚌";
+                            String transportText = transportEmoji + " ~" + Math.max(1, walkMinutes) + " min (" + String.format("%.1f", dist) + " km)";
+                            step.setTransportInfo(transportText);
+                        }
+
+                        prevLat = lat;
+                        prevLon = lon;
+                        realPlaces.add(step);
+                        hour += durationPerStep + 1;
+                        stepIndex++;
+                        if (hour >= 20) {
+                            hour = 9;
+                            currentDay++;
+                        }
+                        if (currentDay > userDuration) break;
+                    }
+                }
 
                 for (int i = 0; i < elements.length() && realPlaces.size() < maxResults; i++) {
                     JSONObject el = elements.getJSONObject(i);
@@ -323,11 +364,11 @@ public class TravelPathResultFragment extends Fragment {
 
                     String timeSlot;
                     if (hour < 12) {
-                        timeSlot = String.format("%02d:00 - %02d:00 (Matin)", hour, hour + durationPerStep);
+                        timeSlot = String.format("Jour %d • %02d:00 - %02d:00 (Matin)", currentDay, hour, hour + durationPerStep);
                     } else if (hour < 18) {
-                        timeSlot = String.format("%02d:00 - %02d:00 (Après-midi)", hour, hour + durationPerStep);
+                        timeSlot = String.format("Jour %d • %02d:00 - %02d:00 (Après-midi)", currentDay, hour, hour + durationPerStep);
                     } else {
-                        timeSlot = String.format("%02d:00 - %02d:00 (Soir)", hour, hour + durationPerStep);
+                        timeSlot = String.format("Jour %d • %02d:00 - %02d:00 (Soir)", currentDay, hour, hour + durationPerStep);
                     }
 
                     double lat = el.getDouble("lat");
@@ -346,7 +387,7 @@ public class TravelPathResultFragment extends Fragment {
                         desc.append(" • Horaires: ").append(openingHours);
                     }
 
-                    TripStep step = new TripStep(name, desc.toString(), timeSlot, budgetPerStep, lat, lon, typeDisplay, null);
+                    TripStep step = new TripStep(name, desc.toString(), timeSlot, getRealisticBudget(type, planName), lat, lon, typeDisplay, null);
 
                     // Calculate realistic transport from previous step
                     if (!realPlaces.isEmpty()) {
@@ -361,7 +402,11 @@ public class TravelPathResultFragment extends Fragment {
                     prevLon = lon;
                     realPlaces.add(step);
                     hour += durationPerStep + 1; // +1 for travel
-                    if (hour > 21) break;
+                    if (hour >= 20) {
+                        hour = 9;
+                        currentDay++;
+                    }
+                    if (currentDay > userDuration) break;
                 }
 
                 mainHandler.post(() -> {
@@ -369,10 +414,10 @@ public class TravelPathResultFragment extends Fragment {
                         Toast.makeText(getContext(), "Aucun lieu trouvé à proximité, affichage par défaut.", Toast.LENGTH_SHORT).show();
                         generateFallbackItinerary(planName);
                     } else {
-                        currentSteps.addAll(realPlaces);
-                        adapter.notifyDataSetChanged();
-                        updateMapMarkers();
-                        updateMetricsUI(calculateTotalBudget(), calculateTotalHours(), planName);
+                        allGeneratedSteps.clear();
+                        allGeneratedSteps.addAll(realPlaces);
+                        setupDayTabs();
+                        filterStepsForDay(1); // Select first day by default
                     }
                 });
 
@@ -384,6 +429,31 @@ public class TravelPathResultFragment extends Fragment {
                 });
             }
         });
+    }
+
+    private void setupDayTabs() {
+        tabLayout.removeAllTabs();
+        for (int i = 1; i <= userDuration; i++) {
+            tabLayout.addTab(tabLayout.newTab().setText("Jour " + i));
+        }
+    }
+
+    private void filterStepsForDay(int day) {
+        currentSteps.clear();
+        String dayPrefix = "Jour " + day + " •";
+        for (TripStep step : allGeneratedSteps) {
+            if (step.getTimeSlot() != null && step.getTimeSlot().startsWith(dayPrefix)) {
+                currentSteps.add(step);
+            }
+        }
+        if (currentSteps.isEmpty() && day == 1) {
+            // Si le formatage n'a pas matché pour une raison obscure, afficher tout
+            currentSteps.addAll(allGeneratedSteps);
+        }
+        TripStepAdapter adapter = (TripStepAdapter) rvTimeline.getAdapter();
+        if (adapter != null) adapter.notifyDataSetChanged();
+        updateMapMarkers();
+        updateMetricsUI(calculateTotalBudget(), calculateTotalHours(), "Economique");
     }
 
     // ───────────── Haversine Distance ─────────────
@@ -412,20 +482,24 @@ public class TravelPathResultFragment extends Fragment {
     }
 
     private void generateFallbackItinerary(String planName) {
-        currentSteps.clear();
+        allGeneratedSteps.clear();
         String prefix = selectedDestination != null ? selectedDestination.split(",")[0].trim() : "Lieu";
-        currentSteps.add(new TripStep("Exploration de " + prefix, "Découvrez les rues historiques et les places emblématiques.", "10:00 - 12:00 (Matin)", 0, baseLat, baseLon, "Découverte", null));
-        currentSteps.add(new TripStep("Déjeuner local", "Goûtez la cuisine locale dans un restaurant typique.", "12:30 - 14:00 (Midi)", 25, baseLat + 0.002, baseLon + 0.001, "Restauration", null));
-        currentSteps.add(new TripStep("Visite culturelle", "Explorez un musée ou monument local.", "15:00 - 17:00 (Après-midi)", 15, baseLat - 0.001, baseLon + 0.002, "Culture", null));
+        
+        int hour = 9;
+        for (int day = 1; day <= userDuration; day++) {
+            TripStep s1 = new TripStep("Exploration de " + prefix, "Découvrez les rues historiques.", String.format("Jour %d • %02d:00 - %02d:00 (Matin)", day, hour, hour+2), 0, baseLat, baseLon, "Découverte", null);
+            TripStep s2 = new TripStep("Déjeuner local", "Cuisine locale typique.", String.format("Jour %d • %02d:00 - %02d:00 (Midi)", day, hour+3, hour+5), 25, baseLat + 0.002, baseLon + 0.001, "Restauration", null);
+            s2.setTransportInfo("🚶 ~10 min (0.8 km)");
+            TripStep s3 = new TripStep("Visite culturelle", "Musée ou monument.", String.format("Jour %d • %02d:00 - %02d:00 (Après-midi)", day, hour+6, hour+8), 15, baseLat - 0.001, baseLon + 0.002, "Culture", null);
+            s3.setTransportInfo("🚶 ~12 min (1.0 km)");
+            
+            allGeneratedSteps.add(s1);
+            allGeneratedSteps.add(s2);
+            allGeneratedSteps.add(s3);
+        }
 
-        // Add transport info for fallback
-        currentSteps.get(1).setTransportInfo("🚶 ~10 min (0.8 km)");
-        currentSteps.get(2).setTransportInfo("🚶 ~12 min (1.0 km)");
-
-        TripStepAdapter adapter = (TripStepAdapter) rvTimeline.getAdapter();
-        if (adapter != null) adapter.notifyDataSetChanged();
-        updateMapMarkers();
-        updateMetricsUI(40, 6, planName);
+        setupDayTabs();
+        filterStepsForDay(1);
     }
 
     private void updateMetricsUI(int totalBudget, int totalHours, String planName) {
@@ -537,11 +611,27 @@ public class TravelPathResultFragment extends Fragment {
 
         sb.append("Généré par TravelPath 🧭");
 
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Mon itinéraire TravelPath - " + selectedDestination);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
-        startActivity(Intent.createChooser(shareIntent, "Partager l'itinéraire"));
+        String fullText = sb.toString();
+
+        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Partager l'itinéraire")
+            .setItems(new CharSequence[]{"Publier sur TravelShare", "Partager via d'autres apps"}, (dialog, which) -> {
+                if (which == 0) {
+                    // Publier sur TravelShare
+                    Intent pubIntent = new Intent(getActivity(), com.traveling.app.travelshare.ui.PublishActivity.class);
+                    pubIntent.putExtra("PREFILL_DESC", fullText);
+                    pubIntent.putExtra("PREFILL_LOCATION", selectedDestination);
+                    startActivity(pubIntent);
+                } else {
+                    // Partager via le système
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Mon itinéraire TravelPath - " + selectedDestination);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, fullText);
+                    startActivity(Intent.createChooser(shareIntent, "Partager l'itinéraire"));
+                }
+            })
+            .show();
     }
 
     // ───────────── Export PDF ─────────────
@@ -628,15 +718,70 @@ public class TravelPathResultFragment extends Fragment {
 
         pdfDocument.finishPage(page);
 
-        File file = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "Itineraire_TravelPath.pdf");
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        if (!downloadsDir.exists()) {
+            downloadsDir.mkdirs();
+        }
+        
+        String fileName = "Itineraire_TravelPath_" + System.currentTimeMillis() + ".pdf";
+        File file = new File(downloadsDir, fileName);
+        
         try {
             pdfDocument.writeTo(new FileOutputStream(file));
-            Toast.makeText(getContext(), "PDF exporté : " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "PDF exporté dans Téléchargements !", Toast.LENGTH_SHORT).show();
+            
+            // Ouvrir le PDF automatiquement
+            android.net.Uri pdfUri = androidx.core.content.FileProvider.getUriForFile(
+                    requireContext(),
+                    requireContext().getPackageName() + ".fileprovider",
+                    file
+            );
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(pdfUri, "application/pdf");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            
+            Intent chooser = Intent.createChooser(intent, "Ouvrir le PDF avec...");
+            startActivity(chooser);
+            
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "Erreur lors de l'exportation PDF", Toast.LENGTH_SHORT).show();
         }
         pdfDocument.close();
+    }
+
+    private int getRealisticBudget(String rawType, String planName) {
+        String plan = planName.toLowerCase();
+        String type = rawType.toLowerCase();
+        java.util.Random random = new java.util.Random();
+        
+        if (type.contains("restaurant") || type.contains("cafe") || type.contains("fast_food") || type.contains("bar") || type.contains("food")) {
+            if (plan.contains("confort")) return 45 + random.nextInt(46); // 45 - 90
+            if (plan.contains("quilibr")) return 20 + random.nextInt(16); // 20 - 35
+            return 8 + random.nextInt(8); // 8 - 15
+        }
+        
+        if (type.contains("shop") || type.contains("mall") || type.contains("boutique")) {
+            if (plan.contains("confort")) return 100 + random.nextInt(151); // 100 - 250
+            if (plan.contains("quilibr")) return 30 + random.nextInt(51); // 30 - 80
+            return 10 + random.nextInt(16); // 10 - 25
+        }
+        
+        if (type.contains("museum") || type.contains("theatre") || type.contains("cinema") || type.contains("historic") || type.contains("attraction")) {
+            if (plan.contains("confort")) return 20 + random.nextInt(21); // 20 - 40
+            if (plan.contains("quilibr")) return 8 + random.nextInt(11); // 8 - 18
+            return 0 + random.nextInt(6); // 0 - 5 (often free)
+        }
+        
+        if (type.contains("park") || type.contains("garden") || type.contains("playground") || type.contains("viewpoint")) {
+            if (plan.contains("confort")) return 5 + random.nextInt(11); // 5 - 15
+            return 0; // Free
+        }
+        
+        // Default / General
+        if (plan.contains("confort")) return 30 + random.nextInt(31); // 30 - 60
+        if (plan.contains("quilibr")) return 15 + random.nextInt(16); // 15 - 30
+        return 5 + random.nextInt(11); // 5 - 15
     }
 
     @Override

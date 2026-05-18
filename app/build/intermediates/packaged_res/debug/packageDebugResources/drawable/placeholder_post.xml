@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fond dégradé pour les posts sans photo -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#1A1A2E"
+                android:endColor="#2A2A4E"
+                android:angle="135" />
+        </shape>
+    </item>
+    <!-- Icône centrée -->
+    <item
+        android:gravity="center"
+        android:width="56dp"
+        android:height="56dp">
+        <shape android:shape="oval">
+            <solid android:color="#3A3A5E"/>
+        </shape>
+    </item>
+</layer-list>

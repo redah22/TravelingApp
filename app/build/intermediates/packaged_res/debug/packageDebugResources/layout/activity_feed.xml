@@ -15,11 +15,15 @@
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@android:drawable/ic_menu_revert"
             app:tint="#FFFFFF"
-            android:padding="4dp"/>
+            android:padding="8dp"
+            android:contentDescription="Retour"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <TextView
             android:layout_width="0dp"
@@ -29,16 +33,20 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginStart="8dp" />
 
         <ImageView
             android:id="@+id/btnSearch"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@android:drawable/ic_menu_search"
             app:tint="#FFFFFF"
-            android:layout_marginEnd="16dp"
-            android:padding="4dp"/>
+            android:layout_marginEnd="4dp"
+            android:padding="8dp"
+            android:contentDescription="Rechercher"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <Button
             android:id="@+id/btnLoginFeed"
@@ -49,17 +57,42 @@
             android:textColor="#6C63FF"
             android:visibility="gone" />
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/btnProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="👤"
-            android:textSize="24sp"
-            android:gravity="center"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginEnd="16dp"
-            android:padding="4dp"
-            android:visibility="gone" />
+            app:cardCornerRadius="18dp"
+            app:strokeWidth="1.5dp"
+            app:strokeColor="#FFFFFF"
+            app:cardBackgroundColor="#2A2A3E"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvFeedProfileInitials"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="V"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+        </com.google.android.material.card.MaterialCardView>
     </androidx.appcompat.widget.Toolbar>
+
+    <!-- Search Bar (hidden by default) -->
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Rechercher par lieu, auteur ou tag..."
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        android:visibility="gone"/>
 
     <!-- Bannière Mode Découverte (visible si anonyme) -->
     <LinearLayout

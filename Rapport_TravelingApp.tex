@@ -76,17 +76,45 @@ Ce dépôt regroupe l'application finale issue de la fusion complète des deux m
 
 \newpage
 
+\section{Développements de la phase finale}
+
+\subsection{Corrections fonctionnelles (Back-end)}
+\begin{itemize}[label=\textcolor{primary}{\textbullet}]
+    \item \textbf{Authentification unifiée :} Le \texttt{LoginFragment} (Java) interroge désormais en cascade les deux sources de données : d'abord les \textit{SharedPreferences} (chemin rapide), puis \texttt{DatabaseHelper.kt} via un fallback SQLite si le compte n'est connu que de la base de données (cas d'une réinstallation). La méthode \texttt{getInstance} a été annotée \texttt{@JvmStatic} pour permettre son appel direct depuis Java.
+    
+    \item \textbf{Filtre de visibilité du fil public :} Ajout de la méthode \texttt{recupererPostsPublics()} dans \texttt{DatabaseHelper} qui ne retourne que les publications ayant le scope \texttt{PUBLIC}. Le fil d'actualité (\texttt{FeedActivity}) et la carte (\texttt{MapFeedActivity}) utilisent désormais cette méthode, garantissant que les posts privés et de groupe n'apparaissent pas dans l'espace public.
+    
+    \item \textbf{Contexte utilisateur dans la carte :} \texttt{MapFeedActivity} transmettait systématiquement \texttt{IS\_ANONYMOUS = true} aux fiches détaillées. Ce bug empêchait les utilisateurs connectés d'interagir depuis la carte. Le contexte est maintenant passé correctement via les extras de l'Intent.
+    
+    \item \textbf{Synchronisation du fil après publication :} Correction d'un bug de synchronisation entre \texttt{postsList} et \texttt{currentDisplayList} dans \texttt{FeedActivity} : les nouvelles publications sont maintenant insérées dans les deux listes, assurant la cohérence de la recherche immédiatement après une publication.
+\end{itemize}
+
+\subsection{Améliorations UX/UI et Accessibilité (Front-end)}
+\begin{itemize}[label=\textcolor{primary}{\textbullet}]
+    \item \textbf{Dates relatives :} Le \texttt{PhotoPostAdapter} calcule désormais des dates relatives (``Il y a 2h'', ``Hier'', ``Il y a 3j'') au lieu de dates absolues, conformément aux standards UX des réseaux sociaux.
+    
+    \item \textbf{Description dans les cartes :} Chaque carte de publication dans le fil affiche maintenant les 2 premières lignes de la description (tronquées par ellipsis), donnant plus de contexte sans alourdir l'interface.
+    
+    \item \textbf{Accessibilité TalkBack :} Ajout systématique des attributs \texttt{contentDescription} sur toutes les \texttt{ImageView} interactives (boutons retour, recherche, profil) et sur les éléments de la liste de publications. Les icônes décoratives sont marquées \texttt{importantForAccessibility="no"} pour éviter les doublons vocaux. La zone minimale de toucher des boutons a été portée à 48dp (recommandation Material Design).
+    
+    \item \textbf{Thème unifié :} Les deux thèmes (\texttt{Theme.Traveling} et \texttt{Theme.TravelPath}) utilisent maintenant les couleurs de charte définitives \texttt{\#7C4DFF}/\texttt{\#6C63FF} au lieu des couleurs Material par défaut. La barre de navigation système est également colorée en cohérence.
+    
+    \item \textbf{Placeholder élégant :} Un drawable vectoriel \texttt{placeholder\_post.xml} remplace le générique \texttt{ic\_menu\_gallery} pour les publications sans photo.
+    
+    \item \textbf{Animation d'entrée :} Les deux cartes de l'écran d'accueil (\texttt{HomeFragment}) se révèlent avec une animation \textit{fade + slide-up} décalée, donnant une impression de dynamisme à l'ouverture de l'application.
+\end{itemize}
+
 \section{Ce qu'il reste à faire / Pistes d'évolutions}
 
 \begin{itemize}[label=\textcolor{primary}{\textbullet}]
     \item \textbf{Cloud Persistant et Synchronisation distante :}\\
-    Actuellement, l'intégralité du réseau social TravelShare est restreint au périmètre confiné de la machine (SQLite). Pour valider le concept "Communautaire", il faudrait implémenter une API REST ou brancher un back-end as-a-Service, tel que \textit{Firebase (Firestore \& Storage)} ou  un back-end de type \textit{PostgreSQL/Spring Boot}, afin que le flux de publications et de profils se synchronise en direct entre deux téléphones distincts.
+    Actuellement, l'intégralité du réseau social TravelShare est restreint au périmètre confiné de la machine (SQLite). Pour valider le concept ``Communautaire'', il faudrait implémenter une API REST ou brancher un back-end as-a-Service, tel que \textit{Firebase (Firestore \& Storage)} ou  un back-end de type \textit{PostgreSQL/Spring Boot}, afin que le flux de publications et de profils se synchronise en direct entre deux téléphones distincts.
 
     \item \textbf{Optimisation du Routage (Temps-Réel) :}\\
     Le dessin de l'itinéraire sur la carte d'OSMDroid utilise majoritairement un calcul vectoriel pour tracer ses droits. L'utilisation et la substitution par une API dédiée et spécialisée (ex: \textit{GraphHopper Routing API} ou \textit{Google Directions API}) rendrait les horaires, les routes empruntées et les propositions de détours à pied beaucoup plus réalistes en se fiant aux topologies exactes des routes piétonnes.
 
-    \item \textbf{Boucle Applicative (Inter-dépendance et Partage) :}\\
-    L'étape applicative ultime de la fusion consisterait à ce que l'itinéraire approuvé et sauvegardé via \textit{TravelPath} offre la possibilité de publier en 1-clic une image récapitulative et sa géolocalisation pour transparaître instantanément comme une publication valide et officielle sur l'onglet actualité de \textit{TravelShare}. 
+    \item \textbf{Notifications Push :}\\
+    Les interrupteurs de notification dans l'interface sont actuellement visuels uniquement. L'implémentation complète nécessiterait \textit{Firebase Cloud Messaging} ou un \texttt{WorkManager} Android pour déclencher des notifications système réelles lors de nouveaux likes, commentaires ou publications dans les groupes suivis.
 \end{itemize}
 
 \end{document}

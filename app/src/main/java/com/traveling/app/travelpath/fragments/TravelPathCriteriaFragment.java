@@ -3,6 +3,8 @@ package com.traveling.app.travelpath.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -239,6 +241,15 @@ public class TravelPathCriteriaFragment extends Fragment {
     }
 
     private void generatePaths() {
+        // Masquer le clavier virtuel
+        View currentView = getView();
+        if (currentView != null) {
+            InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(currentView.getWindowToken(), 0);
+            }
+        }
+
         String destination = etDestination.getText().toString();
         if (destination.isEmpty()) {
             etDestination.setError("Destination requise");

@@ -56,8 +56,8 @@
                 android:textSize="18sp"
                 android:layout_marginBottom="12dp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvGroups"
+            <ListView
+                android:id="@+id/lvGroups"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />

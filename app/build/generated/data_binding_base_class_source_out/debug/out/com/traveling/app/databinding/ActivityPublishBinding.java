@@ -4,6 +4,7 @@ package com.traveling.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,9 +37,6 @@ public final class ActivityPublishBinding implements ViewBinding {
   public final Button btnPublish;
 
   @NonNull
-  public final LinearLayout btnRecordAudio;
-
-  @NonNull
   public final MaterialCardView cardImagePicker;
 
   @NonNull
@@ -46,6 +44,9 @@ public final class ActivityPublishBinding implements ViewBinding {
 
   @NonNull
   public final TextInputEditText etDescription;
+
+  @NonNull
+  public final AutoCompleteTextView etLocation;
 
   @NonNull
   public final ImageView ivPreview;
@@ -67,8 +68,8 @@ public final class ActivityPublishBinding implements ViewBinding {
 
   private ActivityPublishBinding(@NonNull ScrollView rootView, @NonNull ImageView btnCancel,
       @NonNull LinearLayout btnGenerateAITags, @NonNull Button btnPublish,
-      @NonNull LinearLayout btnRecordAudio, @NonNull MaterialCardView cardImagePicker,
-      @NonNull ChipGroup chipGroupAITags, @NonNull TextInputEditText etDescription,
+      @NonNull MaterialCardView cardImagePicker, @NonNull ChipGroup chipGroupAITags,
+      @NonNull TextInputEditText etDescription, @NonNull AutoCompleteTextView etLocation,
       @NonNull ImageView ivPreview, @NonNull LinearLayout llPickerPlaceholder,
       @NonNull RadioButton rbGroup, @NonNull RadioButton rbPrivate, @NonNull RadioButton rbPublic,
       @NonNull RadioGroup rgVisibility) {
@@ -76,10 +77,10 @@ public final class ActivityPublishBinding implements ViewBinding {
     this.btnCancel = btnCancel;
     this.btnGenerateAITags = btnGenerateAITags;
     this.btnPublish = btnPublish;
-    this.btnRecordAudio = btnRecordAudio;
     this.cardImagePicker = cardImagePicker;
     this.chipGroupAITags = chipGroupAITags;
     this.etDescription = etDescription;
+    this.etLocation = etLocation;
     this.ivPreview = ivPreview;
     this.llPickerPlaceholder = llPickerPlaceholder;
     this.rbGroup = rbGroup;
@@ -133,12 +134,6 @@ public final class ActivityPublishBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnRecordAudio;
-      LinearLayout btnRecordAudio = ViewBindings.findChildViewById(rootView, id);
-      if (btnRecordAudio == null) {
-        break missingId;
-      }
-
       id = R.id.cardImagePicker;
       MaterialCardView cardImagePicker = ViewBindings.findChildViewById(rootView, id);
       if (cardImagePicker == null) {
@@ -154,6 +149,12 @@ public final class ActivityPublishBinding implements ViewBinding {
       id = R.id.etDescription;
       TextInputEditText etDescription = ViewBindings.findChildViewById(rootView, id);
       if (etDescription == null) {
+        break missingId;
+      }
+
+      id = R.id.etLocation;
+      AutoCompleteTextView etLocation = ViewBindings.findChildViewById(rootView, id);
+      if (etLocation == null) {
         break missingId;
       }
 
@@ -194,7 +195,7 @@ public final class ActivityPublishBinding implements ViewBinding {
       }
 
       return new ActivityPublishBinding((ScrollView) rootView, btnCancel, btnGenerateAITags,
-          btnPublish, btnRecordAudio, cardImagePicker, chipGroupAITags, etDescription, ivPreview,
+          btnPublish, cardImagePicker, chipGroupAITags, etDescription, etLocation, ivPreview,
           llPickerPlaceholder, rbGroup, rbPrivate, rbPublic, rgVisibility);
     }
     String missingId = rootView.getResources().getResourceName(id);

@@ -1,5 +1,6 @@
 R_DEF: Internal format may change without notice
 local
+anim slide_up_fade
 color black
 color ic_launcher_background
 color purple_200
@@ -10,6 +11,7 @@ color teal_700
 color white
 drawable circle_primary
 drawable ic_launcher_foreground
+drawable placeholder_post
 id bannerAnonymous
 id btnAnonymous
 id btnBack
@@ -38,7 +40,6 @@ id btnLogout
 id btnNavigate
 id btnProfile
 id btnPublish
-id btnRecordAudio
 id btnRegenerate
 id btnRegister
 id btnReportDetail
@@ -49,6 +50,7 @@ id btnShare
 id btnSignupBanner
 id btnSubscribeAuthor
 id btnSwitchToFeed
+id btnTabItineraries
 id btnTabLikes
 id btnTabPhotos
 id btnWeatherChaleur
@@ -70,9 +72,11 @@ id etDescription
 id etDestination
 id etEmail
 id etFullName
+id etLocation
 id etMandatoryPlaces
 id etMapSearchBox
 id etPassword
+id etSearch
 id fabPublish
 id fragment_container
 id ivDetailPhoto
@@ -82,6 +86,8 @@ id ivStepImage
 id llAddComment
 id llCommentsList
 id llPickerPlaceholder
+id lvGroups
+id lvProfileItineraries
 id main
 id mapFeed
 id mapView
@@ -89,7 +95,6 @@ id rbGroup
 id rbPrivate
 id rbPublic
 id rgVisibility
-id rvGroups
 id rvPhotoFeed
 id rvProfilePhotos
 id rvTimeline
@@ -119,6 +124,7 @@ id tvDetailLocation
 id tvDurationText
 id tvEffort
 id tvEmptyProfile
+id tvFeedProfileInitials
 id tvFollowersCount
 id tvFollowingCount
 id tvGoLogin
@@ -179,3 +185,4 @@ string weather_heat
 string weather_rain
 style Theme.TravelPath
 style Theme.Traveling
+xml file_paths

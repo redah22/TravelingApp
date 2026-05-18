@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
 
         view.findViewById(R.id.cardTravelShare).setOnClickListener(v -> {
             android.content.Intent intent = new android.content.Intent(getActivity(), com.traveling.app.travelshare.ui.FeedActivity.class);
-            
+
             String displayName = currentUser;
             if (!"anonymous".equals(currentUser) && currentUser.contains("@")) {
                 displayName = currentUser.split("@")[0];
@@ -62,5 +62,14 @@ public class HomeFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
+
+        // Animation d'entrée sur les cartes
+        android.view.animation.Animation anim = android.view.animation.AnimationUtils.loadAnimation(getContext(), R.anim.slide_up_fade);
+        anim.setStartOffset(100);
+        view.findViewById(R.id.cardTravelShare).startAnimation(anim);
+
+        android.view.animation.Animation anim2 = android.view.animation.AnimationUtils.loadAnimation(getContext(), R.anim.slide_up_fade);
+        anim2.setStartOffset(200);
+        view.findViewById(R.id.cardTravelPath).startAnimation(anim2);
     }
 }

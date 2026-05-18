@@ -43,6 +43,9 @@ public final class ItemPhotoPostBinding implements ViewBinding {
   public final TextView tvDate;
 
   @NonNull
+  public final TextView tvDescription;
+
+  @NonNull
   public final TextView tvLikesCount;
 
   @NonNull
@@ -51,7 +54,8 @@ public final class ItemPhotoPostBinding implements ViewBinding {
   private ItemPhotoPostBinding(@NonNull MaterialCardView rootView, @NonNull LinearLayout btnComment,
       @NonNull LinearLayout btnLike, @NonNull ImageView ivPhoto, @NonNull TextView tvAuthorName,
       @NonNull TextView tvAvatarInitials, @NonNull TextView tvCommentsCount,
-      @NonNull TextView tvDate, @NonNull TextView tvLikesCount, @NonNull TextView tvLocation) {
+      @NonNull TextView tvDate, @NonNull TextView tvDescription, @NonNull TextView tvLikesCount,
+      @NonNull TextView tvLocation) {
     this.rootView = rootView;
     this.btnComment = btnComment;
     this.btnLike = btnLike;
@@ -60,6 +64,7 @@ public final class ItemPhotoPostBinding implements ViewBinding {
     this.tvAvatarInitials = tvAvatarInitials;
     this.tvCommentsCount = tvCommentsCount;
     this.tvDate = tvDate;
+    this.tvDescription = tvDescription;
     this.tvLikesCount = tvLikesCount;
     this.tvLocation = tvLocation;
   }
@@ -133,6 +138,12 @@ public final class ItemPhotoPostBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tvDescription;
+      TextView tvDescription = ViewBindings.findChildViewById(rootView, id);
+      if (tvDescription == null) {
+        break missingId;
+      }
+
       id = R.id.tvLikesCount;
       TextView tvLikesCount = ViewBindings.findChildViewById(rootView, id);
       if (tvLikesCount == null) {
@@ -146,7 +157,8 @@ public final class ItemPhotoPostBinding implements ViewBinding {
       }
 
       return new ItemPhotoPostBinding((MaterialCardView) rootView, btnComment, btnLike, ivPhoto,
-          tvAuthorName, tvAvatarInitials, tvCommentsCount, tvDate, tvLikesCount, tvLocation);
+          tvAuthorName, tvAvatarInitials, tvCommentsCount, tvDate, tvDescription, tvLikesCount,
+          tvLocation);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -73,11 +73,30 @@ class PhotoDetailActivity : AppCompatActivity() {
 
         binding.btnNavigate.setOnClickListener { navigateToLocation(latitude, longitude) }
 
+        val authorName = intent.getStringExtra("AUTHOR_NAME") ?: ""
         binding.btnSubscribeAuthor.setOnClickListener {
             if (isAnonymous) {
                 Toast.makeText(this, "Connectez-vous pour vous abonner.", Toast.LENGTH_SHORT).show()
+            } else if (currentUserName == authorName) {
+                Toast.makeText(this, "Vous ne pouvez pas vous abonner à vous-même.", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "✅ Abonné !", Toast.LENGTH_SHORT).show()
+                val db = DatabaseHelper.getInstance(this)
+                if (db.estAbonne(currentUserName, authorName)) {
+                    db.seDesabonner(currentUserName, authorName)
+                    binding.btnSubscribeAuthor.text = "S'abonner"
+                    Toast.makeText(this, "Désabonné de $authorName", Toast.LENGTH_SHORT).show()
+                } else {
+                    db.suivre(currentUserName, authorName)
+                    binding.btnSubscribeAuthor.text = "✓ Abonné"
+                    Toast.makeText(this, "✅ Abonné à $authorName !", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        // Init du label
+        if (!isAnonymous && authorName.isNotEmpty() && currentUserName != authorName) {
+            val db = DatabaseHelper.getInstance(this)
+            if (db.estAbonne(currentUserName, authorName)) {
+                binding.btnSubscribeAuthor.text = "✓ Abonné"
             }
         }
     }

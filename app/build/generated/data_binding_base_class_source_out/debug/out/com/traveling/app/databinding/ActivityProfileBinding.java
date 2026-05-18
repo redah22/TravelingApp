@@ -6,10 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ScrollView;
+import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -20,7 +21,7 @@ import java.lang.String;
 
 public final class ActivityProfileBinding implements ViewBinding {
   @NonNull
-  private final ScrollView rootView;
+  private final NestedScrollView rootView;
 
   @NonNull
   public final ImageView btnBack;
@@ -38,10 +39,16 @@ public final class ActivityProfileBinding implements ViewBinding {
   public final ImageView btnSettings;
 
   @NonNull
+  public final Button btnTabItineraries;
+
+  @NonNull
   public final Button btnTabLikes;
 
   @NonNull
   public final Button btnTabPhotos;
+
+  @NonNull
+  public final ListView lvProfileItineraries;
 
   @NonNull
   public final RecyclerView rvProfilePhotos;
@@ -70,22 +77,25 @@ public final class ActivityProfileBinding implements ViewBinding {
   @NonNull
   public final TextView tvProfileName;
 
-  private ActivityProfileBinding(@NonNull ScrollView rootView, @NonNull ImageView btnBack,
+  private ActivityProfileBinding(@NonNull NestedScrollView rootView, @NonNull ImageView btnBack,
       @NonNull ImageView btnEditAvatar, @NonNull Button btnGroupes, @NonNull Button btnLogout,
-      @NonNull ImageView btnSettings, @NonNull Button btnTabLikes, @NonNull Button btnTabPhotos,
-      @NonNull RecyclerView rvProfilePhotos, @NonNull TextView tvEmptyProfile,
-      @NonNull TextView tvFollowersCount, @NonNull TextView tvFollowingCount,
-      @NonNull TextView tvLikesCount, @NonNull TextView tvPhotosCount,
-      @NonNull TextView tvProfileEmail, @NonNull TextView tvProfileInitials,
-      @NonNull TextView tvProfileName) {
+      @NonNull ImageView btnSettings, @NonNull Button btnTabItineraries,
+      @NonNull Button btnTabLikes, @NonNull Button btnTabPhotos,
+      @NonNull ListView lvProfileItineraries, @NonNull RecyclerView rvProfilePhotos,
+      @NonNull TextView tvEmptyProfile, @NonNull TextView tvFollowersCount,
+      @NonNull TextView tvFollowingCount, @NonNull TextView tvLikesCount,
+      @NonNull TextView tvPhotosCount, @NonNull TextView tvProfileEmail,
+      @NonNull TextView tvProfileInitials, @NonNull TextView tvProfileName) {
     this.rootView = rootView;
     this.btnBack = btnBack;
     this.btnEditAvatar = btnEditAvatar;
     this.btnGroupes = btnGroupes;
     this.btnLogout = btnLogout;
     this.btnSettings = btnSettings;
+    this.btnTabItineraries = btnTabItineraries;
     this.btnTabLikes = btnTabLikes;
     this.btnTabPhotos = btnTabPhotos;
+    this.lvProfileItineraries = lvProfileItineraries;
     this.rvProfilePhotos = rvProfilePhotos;
     this.tvEmptyProfile = tvEmptyProfile;
     this.tvFollowersCount = tvFollowersCount;
@@ -99,7 +109,7 @@ public final class ActivityProfileBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public ScrollView getRoot() {
+  public NestedScrollView getRoot() {
     return rootView;
   }
 
@@ -154,6 +164,12 @@ public final class ActivityProfileBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnTabItineraries;
+      Button btnTabItineraries = ViewBindings.findChildViewById(rootView, id);
+      if (btnTabItineraries == null) {
+        break missingId;
+      }
+
       id = R.id.btnTabLikes;
       Button btnTabLikes = ViewBindings.findChildViewById(rootView, id);
       if (btnTabLikes == null) {
@@ -163,6 +179,12 @@ public final class ActivityProfileBinding implements ViewBinding {
       id = R.id.btnTabPhotos;
       Button btnTabPhotos = ViewBindings.findChildViewById(rootView, id);
       if (btnTabPhotos == null) {
+        break missingId;
+      }
+
+      id = R.id.lvProfileItineraries;
+      ListView lvProfileItineraries = ViewBindings.findChildViewById(rootView, id);
+      if (lvProfileItineraries == null) {
         break missingId;
       }
 
@@ -220,10 +242,10 @@ public final class ActivityProfileBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityProfileBinding((ScrollView) rootView, btnBack, btnEditAvatar, btnGroupes,
-          btnLogout, btnSettings, btnTabLikes, btnTabPhotos, rvProfilePhotos, tvEmptyProfile,
-          tvFollowersCount, tvFollowingCount, tvLikesCount, tvPhotosCount, tvProfileEmail,
-          tvProfileInitials, tvProfileName);
+      return new ActivityProfileBinding((NestedScrollView) rootView, btnBack, btnEditAvatar,
+          btnGroupes, btnLogout, btnSettings, btnTabItineraries, btnTabLikes, btnTabPhotos,
+          lvProfileItineraries, rvProfilePhotos, tvEmptyProfile, tvFollowersCount, tvFollowingCount,
+          tvLikesCount, tvPhotosCount, tvProfileEmail, tvProfileInitials, tvProfileName);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
